@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Strateg AI</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 6.5C16 12.5 12.5 16 6.5 16C12.5 16 16 19.5 16 25.5C16 19.5 19.5 16 25.5 16C19.5 16 16 12.5 16 6.5Z' fill='white'/><path d='M22.5 7C22.5 9.5 20.5 11 18 11.5C20.5 12 22.5 13.5 22.5 16C22.5 13.5 24.5 12 27 11.5C24.5 11 22.5 9.5 22.5 7Z' fill='%2393c5fd'/></svg>"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'><rect width='32' height='32' rx='8' fill='%232563eb'/><circle cx='16' cy='11' r='5' fill='white'/><circle cx='10.5' cy='20.5' r='5' fill='white'/><circle cx='21.5' cy='20.5' r='5' fill='white'/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -12,8 +12,8 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;color:#18181b;overflow-x:hidden}
-.dot-grid{background-color:#f4f5f7;background-image:radial-gradient(circle,#d1d5db 1.2px,transparent 1.2px);background-size:22px 22px}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background-color:#f4f5f7;background-image:radial-gradient(circle,#d1d5db 1.2px,transparent 1.2px);background-size:22px 22px;color:#18181b;overflow-x:hidden;cursor:none}
+.dot-grid{background:transparent} /* Handled globally by body now */
 @keyframes float-a{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(-2deg)}}
 @keyframes float-b{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(-8px) rotate(1.5deg)}}
 @keyframes float-c{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
@@ -66,6 +66,28 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
 @keyframes pop-in{0%{opacity:0;transform:scale(.85) translateY(16px)}60%{transform:scale(1.04) translateY(-2px)}100%{opacity:1;transform:scale(1) translateY(0)}}
 .integ-card{opacity:0;transform:scale(.85) translateY(16px)}
 .integ-card.visible{animation:pop-in .55s cubic-bezier(.16,1,.3,1) forwards}
+
+/* Custom Cursor */
+#custom-cursor {
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(37, 99, 235, 0.4);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.3);
+}
+#custom-cursor.active {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(37, 99, 235, 0.9);
+}
 </style>
 </head>
 <body>
@@ -78,8 +100,9 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
       <div class="w-8 h-8 flex-shrink-0">
         <svg width="100%" height="100%" viewBox="0 0 32 32" fill="none">
           <rect width="32" height="32" rx="8" fill="#2563eb"/>
-          <path d="M16 6.5C16 12.5 12.5 16 6.5 16C12.5 16 16 19.5 16 25.5C16 19.5 19.5 16 25.5 16C19.5 16 16 12.5 16 6.5Z" fill="white"/>
-          <path d="M22.5 7C22.5 9.5 20.5 11 18 11.5C20.5 12 22.5 13.5 22.5 16C22.5 13.5 24.5 12 27 11.5C24.5 11 22.5 9.5 22.5 7Z" fill="#93c5fd"/>
+          <circle cx="16" cy="11" r="5" fill="white"/>
+          <circle cx="10.5" cy="20.5" r="5" fill="white"/>
+          <circle cx="21.5" cy="20.5" r="5" fill="white"/>
         </svg>
       </div>
       <span style="font-weight:800" class="text-zinc-900 text-base tracking-tight">Strateg AI</span>
@@ -112,7 +135,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
 
 
 <!-- HERO -->
-<section class="min-h-[100dvh] dot-grid relative overflow-hidden flex flex-col items-center justify-center pt-28 pb-20 px-4">
+<section class="min-h-[100dvh] relative overflow-hidden flex flex-col items-center justify-center pt-28 pb-20 px-4">
 
   <!-- Top-left: Telegram chat -->
   <div class="float-a absolute left-[3%] top-[20%] w-60 hidden md:block">
@@ -220,8 +243,9 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
       <div class="w-10 h-10 flex-shrink-0">
         <svg width="100%" height="100%" viewBox="0 0 32 32" fill="none">
           <rect width="32" height="32" rx="8" fill="#2563eb"/>
-          <path d="M16 6.5C16 12.5 12.5 16 6.5 16C12.5 16 16 19.5 16 25.5C16 19.5 19.5 16 25.5 16C19.5 16 16 12.5 16 6.5Z" fill="white"/>
-          <path d="M22.5 7C22.5 9.5 20.5 11 18 11.5C20.5 12 22.5 13.5 22.5 16C22.5 13.5 24.5 12 27 11.5C24.5 11 22.5 9.5 22.5 7Z" fill="#93c5fd"/>
+          <circle cx="16" cy="11" r="5" fill="white"/>
+          <circle cx="10.5" cy="20.5" r="5" fill="white"/>
+          <circle cx="21.5" cy="20.5" r="5" fill="white"/>
         </svg>
       </div>
     </div>
@@ -264,7 +288,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
 
 
 <!-- FEATURES BENTO -->
-<section id="features" class="py-28 px-4 bg-gray-50">
+<section id="features" class="py-24 px-4 bg-transparent border-t border-gray-100">
   <div class="max-w-6xl mx-auto">
     <div class="mb-16 reveal">
       <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 mb-4">
@@ -368,18 +392,47 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
 
 
 <!-- INTEGRATIONS -->
-<section id="integrations" class="py-28 px-4 bg-white">
+<section id="integrations" class="py-28 px-4 bg-transparent border-t border-gray-100 overflow-hidden relative">
   <div class="max-w-6xl mx-auto">
-    <div class="mb-14 text-center reveal">
-      <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 mb-4">
+    <div class="mb-14 text-center reveal relative">
+      <!-- PARALLAX IOCKETS -->
+      <div id="parallax-icons" class="absolute inset-0 pointer-events-none hidden md:block z-0" style="perspective:1000px">
+        <!-- Insta -->
+        <div class="absolute top-[0%] left-[5%] parallax-item" data-speed="6" data-rotate="-2">
+          <div class="w-20 h-20 rounded-3xl bg-white/60 backdrop-blur-xl shadow-2xl flex items-center justify-center border border-white/50">
+            <svg width="40" height="40" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="5.5" stroke="url(#p_iggrad)" stroke-width="1.8"/><circle cx="11" cy="11" r="4" stroke="url(#p_iggrad)" stroke-width="1.8"/><circle cx="16.5" cy="5.5" r="1.4" fill="url(#p_iggrad)"/><defs><linearGradient id="p_iggrad" x1="2" y1="20" x2="20" y2="2" gradientUnits="userSpaceOnUse"><stop stop-color="#F58529"/><stop offset=".5" stop-color="#DD2A7B"/><stop offset="1" stop-color="#8134AF"/></linearGradient></defs></svg>
+          </div>
+        </div>
+        <!-- Telegram -->
+        <div class="absolute top-[40%] right-[3%] parallax-item" data-speed="-5" data-rotate="1.5">
+          <div class="w-24 h-24 rounded-3xl bg-white/60 backdrop-blur-xl shadow-2xl flex items-center justify-center border border-white/50">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M22 2 2 10l7 3 2 7 3-4 5 4L22 2Z" fill="#0EA5E9"/><path d="M9 13l4-4" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <!-- Whatsapp -->
+        <div class="absolute top-[80%] left-[10%] parallax-item" data-speed="8" data-rotate="-1">
+          <div class="w-16 h-16 rounded-2xl bg-white/60 backdrop-blur-xl shadow-2xl flex items-center justify-center border border-white/50">
+            <svg width="32" height="32" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#25D366"/><path d="M15.5 13.8c-.3-.2-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.8 1c-.2.2-.3.2-.6.1-1.6-.8-2.7-2-3.3-3.3-.2-.3 0-.5.2-.7l.5-.6c.2-.2.2-.4.1-.6L8.4 7.6c-.2-.3-.4-.3-.6-.2-.5.2-1 .5-1.3 1-.5.8-.2 2.2 1.2 4 1.4 1.7 2.8 2.5 4.3 2.9.8.2 1.8.1 2.4-.5.3-.3.5-.7.6-1.1 0-.3-.1-.5-.5-.7h-.1Z" fill="white"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 mb-4 relative z-10">
         <div class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
         <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500">Integratsiyalar</span>
       </div>
-      <h2 style="font-weight:800" class="text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08]">50+ integratsiya.<br><span class="text-zinc-400">Hamma narsa ulangan.</span></h2>
-      <p class="text-base text-zinc-500 mt-4 max-w-[44ch] mx-auto">Strateg AI siz ishlataydigan barcha vositalar bilan muammosiz ishlaydi.</p>
+      <h2 style="font-weight:800" class="text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08] relative z-10">50+ integratsiya.<br><span class="text-zinc-400">Hamma narsa ulangan.</span></h2>
+      <p class="text-base text-zinc-500 mt-4 max-w-[44ch] mx-auto relative z-10">Strateg AI siz ishlataydigan barcha vositalar bilan muammosiz ishlaydi.</p>
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4" id="integGrid">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 relative z-10" id="integGrid">
+      
+      <!-- STAT CARD 1: 3.4x -->
+      <div class="col-span-2 sm:col-span-2 integ-card flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-6 border border-blue-400/30 hover:shadow-xl transition-all duration-300 relative overflow-hidden group cursor-default" style="transition-delay:0ms">
+        <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
+        <div style="font-weight:800" class="text-4xl text-white tracking-tighter mb-1 relative z-10"><span class="stat-num" data-target="3.4" data-suffix="×" data-decimals="1">0×</span></div>
+        <div class="text-xs text-blue-100 text-center font-medium leading-tight relative z-10" data-i18n="stat1_label">more deals closed<br>vs. manual outreach</div>
+      </div>
 
       <!-- Bitrix24 -->
       <div class="integ-card flex flex-col items-center gap-3 bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-orange-200 hover:bg-orange-50/40 hover:shadow-[0_8px_24px_-8px_rgba(255,84,0,.18)] transition-all duration-300 cursor-default" style="transition-delay:0ms">
@@ -435,6 +488,13 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
         <span class="text-xs font-semibold text-zinc-700 text-center">Notion</span>
       </div>
 
+      <!-- STAT CARD 2: < 2 min -->
+      <div class="col-span-2 sm:col-span-2 integ-card flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl p-6 border border-emerald-400/30 hover:shadow-xl transition-all duration-300 relative overflow-hidden group cursor-default" style="transition-delay:180ms">
+        <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
+        <div style="font-weight:800" class="text-4xl text-white tracking-tighter mb-1 relative z-10"><span class="stat-num" data-target="2" data-prefix="< " data-suffix=" min" data-decimals="0">0 min</span></div>
+        <div class="text-xs text-emerald-100 text-center font-medium leading-tight relative z-10" data-i18n="stat2_label">average AI response<br>around the clock</div>
+      </div>
+
       <!-- Instagram -->
       <div class="integ-card flex flex-col items-center gap-3 bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-pink-200 hover:bg-pink-50/40 hover:shadow-[0_8px_24px_-8px_rgba(236,72,153,.15)] transition-all duration-300 cursor-default" style="transition-delay:200ms">
         <div class="w-12 h-12 rounded-xl bg-pink-50 border border-pink-100 flex items-center justify-center">
@@ -476,6 +536,13 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f4f5f7;col
           </svg>
         </div>
         <span class="text-xs font-semibold text-zinc-700 text-center">Slack</span>
+      </div>
+
+      <!-- STAT CARD 3: 47% -->
+      <div class="col-span-2 sm:col-span-2 integ-card flex flex-col items-center justify-center gap-1 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl p-6 border border-purple-400/30 hover:shadow-xl transition-all duration-300 relative overflow-hidden group cursor-default" style="transition-delay:270ms">
+        <div class="absolute right-0 top-1/2 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all"></div>
+        <div style="font-weight:800" class="text-4xl text-white tracking-tighter mb-1 relative z-10"><span class="stat-num" data-target="47" data-suffix="%" data-decimals="0">0%</span></div>
+        <div class="text-xs text-purple-100 text-center font-medium leading-tight relative z-10" data-i18n="stat3_label">less time spent<br>on follow-ups</div>
       </div>
 
       <!-- Google Sheets -->
@@ -755,11 +822,37 @@ function toggleMoreInteg(el) {
     icon.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="5" cy="9" r="1.5" fill="#6b7280"/><circle cx="9" cy="9" r="1.5" fill="#6b7280"/><circle cx="13" cy="9" r="1.5" fill="#6b7280"/></svg>';
   }
 }
+// Cursor logic
+const cursorEl = document.getElementById('custom-cursor');
+if(cursorEl) {
+  document.addEventListener('mousemove', e => {
+    cursorEl.style.left = e.clientX + 'px';
+    cursorEl.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .cursor-pointer, svg, input, text').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorEl.classList.add('active'));
+    el.addEventListener('mouseleave', () => cursorEl.classList.remove('active'));
+  });
+}
+
+// Parallax 3D Scroll logic for Integration icons
+document.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.parallax-item').forEach(item => {
+    const speed = parseFloat(item.getAttribute('data-speed')) || 1;
+    const rotateSpeed = parseFloat(item.getAttribute('data-rotate')) || 1;
+    const yPos = scrollY * 0.1 * speed;
+    const rotation = scrollY * 0.05 * rotateSpeed;
+    item.style.transform = `translateY(${yPos}px) rotate(${rotation}deg)`;
+  });
+});
 </script>
 
+<!-- Custom Cursor container -->
+<div id="custom-cursor"></div>
 
 <!-- SOLUTIONS / ALL SERVICES -->
-<section id="solutions" class="py-28 px-4 bg-white">
+<section id="solutions" class="py-28 px-4 bg-transparent border-t border-gray-100">
   <div class="max-w-6xl mx-auto">
     <div class="mb-16 reveal">
       <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 mb-4">
@@ -854,7 +947,7 @@ function toggleMoreInteg(el) {
 
 
 <!-- HOW IT WORKS -->
-<section id="how" class="py-28 px-4 bg-gray-50">
+<section id="how" class="py-28 px-4 bg-transparent border-t border-gray-100">
   <div class="max-w-4xl mx-auto">
     <div class="mb-16 text-center reveal">
       <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 mb-4">
@@ -903,35 +996,11 @@ function toggleMoreInteg(el) {
 </section>
 
 
-<!-- STATS (count-up on scroll) -->
-<section id="stats" class="bg-white py-24 px-4">
-  <div class="max-w-5xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-3">
-      <div class="text-center py-14 md:border-r border-gray-100 reveal">
-        <div style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900 mb-2">
-          <span class="stat-num" data-target="3.4" data-suffix="×" data-decimals="1">0×</span>
-        </div>
-        <div class="text-sm text-zinc-500 leading-relaxed" data-i18n="stat1_label">more deals closed<br>vs. manual outreach</div>
-      </div>
-      <div class="text-center py-14 md:border-r border-gray-100 reveal" style="animation-delay:90ms">
-        <div style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900 mb-2">
-          <span class="stat-num" data-target="2" data-prefix="&lt; " data-suffix=" min" data-decimals="0">0 min</span>
-        </div>
-        <div class="text-sm text-zinc-500 leading-relaxed" data-i18n="stat2_label">average AI response<br>around the clock</div>
-      </div>
-      <div class="text-center py-14 reveal" style="animation-delay:180ms">
-        <div style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900 mb-2">
-          <span class="stat-num" data-target="47" data-suffix="%" data-decimals="0">0%</span>
-        </div>
-        <div class="text-sm text-zinc-500 leading-relaxed" data-i18n="stat3_label">less time spent<br>on follow-ups</div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 
 <!-- TESTIMONIALS -->
-<section class="py-24 px-4 bg-gray-50">
+<section class="py-24 px-4 bg-transparent border-t border-gray-100">
   <div class="max-w-6xl mx-auto">
     <div class="mb-12 reveal">
       <h2 style="font-weight:800" class="text-3xl md:text-4xl tracking-tighter text-zinc-900" data-i18n="testi_h2">What our clients say</h2>
@@ -998,7 +1067,7 @@ function toggleMoreInteg(el) {
 
 
 <!-- PRICING -->
-<section id="pricing" class="py-28 px-4 bg-white">
+<section id="pricing" class="py-28 px-4 bg-transparent border-t border-gray-100">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-16 reveal">
       <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 mb-4">
@@ -1014,7 +1083,7 @@ function toggleMoreInteg(el) {
         <div class="text-base font-bold text-zinc-900 mb-0.5" data-i18n="plan1_name">Starter plan</div>
         <div class="text-xs text-zinc-400 mb-5" data-i18n="plan1_sub">Perfect for solo reps.</div>
         <div class="h-px bg-gray-200 mb-5"></div>
-        <div class="mb-5"><span style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900">$29</span><span class="text-sm text-zinc-400">/mo</span></div>
+        <div class="mb-5"><span style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900">$49</span><span class="text-sm text-zinc-400">/mo</span></div>
         <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank" class="block text-center border border-blue-600 text-blue-600 font-semibold text-sm py-3 rounded-full mb-6 btn-outline" data-i18n="plan_cta">Get started</a>
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2.5 text-sm text-zinc-600"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="plan1_f1">500 AI conversations/mo</span></li>
@@ -1034,7 +1103,7 @@ function toggleMoreInteg(el) {
         <div class="text-base font-bold text-white mb-0.5" data-i18n="plan2_name">Pro plan</div>
         <div class="text-xs text-blue-300 mb-5" data-i18n="plan2_sub">Ideal for growing teams.</div>
         <div class="h-px bg-white/10 mb-5"></div>
-        <div class="mb-1"><span style="font-weight:800" class="text-5xl tracking-tighter text-white">$79</span><span class="text-sm text-blue-300">/mo</span></div>
+        <div class="mb-1"><span style="font-weight:800" class="text-5xl tracking-tighter text-white">$99</span><span class="text-sm text-blue-300">/mo</span></div>
         <div class="text-[10px] text-blue-300 font-semibold mb-5" data-i18n="plan2_tag">Best choice</div>
         <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank" class="block text-center bg-white text-blue-600 font-semibold text-sm py-3 rounded-full mb-6 btn" data-i18n="plan_cta">Get started</a>
         <ul class="space-y-2.5">
@@ -1053,7 +1122,7 @@ function toggleMoreInteg(el) {
         <div class="text-base font-bold text-zinc-900 mb-0.5" data-i18n="plan3_name">Enterprise plan</div>
         <div class="text-xs text-zinc-400 mb-5" data-i18n="plan3_sub">Best for large sales teams.</div>
         <div class="h-px bg-gray-200 mb-5"></div>
-        <div class="mb-5"><span style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900">$199</span><span class="text-sm text-zinc-400">/mo</span></div>
+        <div class="mb-5"><span style="font-weight:800" class="text-5xl tracking-tighter text-zinc-900">$299</span><span class="text-sm text-zinc-400">/mo</span></div>
         <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank" class="block text-center border border-blue-600 text-blue-600 font-semibold text-sm py-3 rounded-full mb-6 btn-outline" data-i18n="plan_cta">Get started</a>
         <ul class="space-y-2.5">
           <li class="flex items-center gap-2.5 text-sm text-zinc-600"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7l3 3 6-6" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="plan3_f1">Unlimited conversations</span></li>
@@ -1089,8 +1158,9 @@ function toggleMoreInteg(el) {
           <div class="w-8 h-8 flex-shrink-0">
             <svg width="100%" height="100%" viewBox="0 0 32 32" fill="none">
               <rect width="32" height="32" rx="8" fill="#2563eb"/>
-              <path d="M16 6.5C16 12.5 12.5 16 6.5 16C12.5 16 16 19.5 16 25.5C16 19.5 19.5 16 25.5 16C19.5 16 16 12.5 16 6.5Z" fill="white"/>
-              <path d="M22.5 7C22.5 9.5 20.5 11 18 11.5C20.5 12 22.5 13.5 22.5 16C22.5 13.5 24.5 12 27 11.5C24.5 11 22.5 9.5 22.5 7Z" fill="#93c5fd"/>
+              <circle cx="16" cy="11" r="5" fill="white"/>
+              <circle cx="10.5" cy="20.5" r="5" fill="white"/>
+              <circle cx="21.5" cy="20.5" r="5" fill="white"/>
             </svg>
           </div>
           <span style="font-weight:800" class="text-zinc-900 text-base tracking-tight">Strateg AI</span>
@@ -1120,7 +1190,7 @@ function toggleMoreInteg(el) {
     <div class="absolute bottom-8 left-[4%] float-a"><div class="w-12 h-12 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6.5" stroke="#94a3b8" stroke-width="1.3"/><path d="M9 6v3l2 2" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/></svg></div></div>
     <div class="absolute bottom-16 left-[16%] float-b"><div class="w-14 h-14 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><svg width="22" height="17" viewBox="0 0 22 17" fill="none"><path fill-rule="evenodd" d="M21 1 18 16l-6-3.5-3 3-.5-3.5 8-8.5L9 9 2 7 21 1Z" fill="#0EA5E9"/></svg></div></div>
     <div class="absolute bottom-6 left-[30%] float-c"><div class="w-12 h-12 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="4" stroke="#ec4899" stroke-width="1.4"/><circle cx="9" cy="9" r="3" stroke="#ec4899" stroke-width="1.4"/><circle cx="13.5" cy="4.5" r="1.1" fill="#ec4899"/></svg></div></div>
-    <div class="absolute bottom-14 left-[44%] float-a" style="animation-delay:.8s"><div class="w-16 h-16 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><div class="w-10 h-10 flex-shrink-0"><svg width="100%" height="100%" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><path d="M16 6.5C16 12.5 12.5 16 6.5 16C12.5 16 16 19.5 16 25.5C16 19.5 19.5 16 25.5 16C19.5 16 16 12.5 16 6.5Z" fill="white"/><path d="M22.5 7C22.5 9.5 20.5 11 18 11.5C20.5 12 22.5 13.5 22.5 16C22.5 13.5 24.5 12 27 11.5C24.5 11 22.5 9.5 22.5 7Z" fill="#93c5fd"/></svg></div></div></div>
+    <div class="absolute bottom-14 left-[44%] float-a" style="animation-delay:.8s"><div class="w-16 h-16 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><div class="w-10 h-10 flex-shrink-0"><svg width="100%" height="100%" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2563eb"/><circle cx="16" cy="11" r="5" fill="white"/><circle cx="10.5" cy="20.5" r="5" fill="white"/><circle cx="21.5" cy="20.5" r="5" fill="white"/></svg></div></div></div>
     <div class="absolute bottom-5 left-[60%] float-b" style="animation-delay:1.3s"><div class="w-12 h-12 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1 1l5.5 7.5L1 15h2l4-5.3L11 15h4L9.2 7.2 14.5 1h-2L7.5 5.8 5 1H1Z" fill="#18181b"/></svg></div></div>
     <div class="absolute bottom-14 left-[74%] float-c" style="animation-delay:.4s"><div class="w-14 h-14 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><svg width="16" height="18" viewBox="0 0 16 18" fill="none"><path d="M11 1a4 4 0 0 0 4 4v3a7 7 0 0 1-4-1.3V13a5 5 0 1 1-3-4.6V11a2 2 0 1 0 2 2V1h1Z" fill="#18181b"/></svg></div></div>
     <div class="absolute bottom-6 left-[87%] float-a" style="animation-delay:1.8s"><div class="w-12 h-12 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 10l4-6 4 3 4-5" stroke="#10b981" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
@@ -1368,15 +1438,5 @@ const statObs = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.stat-num').forEach(el => statObs.observe(el));
 </script>
-
-<!-- Supabase SDK & Init -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const _supabaseUrl = 'https://chpmywawijsqnwsdzihv.supabase.co';
-  const _supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNocG15d2F3aWpzcW53c2R6aWh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxOTk2NjksImV4cCI6MjA1ODc3NTY2OX0.v8P_OM1MTIxN30.zipRU-9Wbkag2FEWoNqUtu6Dn3_ggTGk2IQS_C3HL_w';
-  const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseAnonKey);
-  console.log('Supabase initialized successfully!');
-</script>
-
 </body>
 </html>
