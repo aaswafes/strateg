@@ -112,7 +112,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:#18181b;background-color:#
 
   <!-- Top-left: Telegram chat -->
   <div class="absolute left-[3%] top-[20%] w-60 hidden md:block">
-    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.09)] p-4 border border-gray-100 group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.09)] p-4 border border-gray-100 group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rotate-[-2deg]">
       <div class="flex items-center gap-2 mb-3">
         <div class="w-8 h-8 rounded-full bg-sky-500 flex items-center justify-center flex-shrink-0">
           <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path fill-rule="evenodd" d="M13.5 1L11.5 11 7.5 8.5 5.5 10.5 5 7.5 12 2 5 6.5 1 5 13.5 1Z" fill="white"/></svg>
@@ -147,7 +147,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:#18181b;background-color:#
 
   <!-- Top-right: pipeline -->
   <div class="absolute right-[3%] top-[18%] hidden md:block" style="width:228px">
-    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.09)] p-4 border border-gray-100 group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.09)] p-4 border border-gray-100 group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rotate-[1.5deg]">
       <div class="flex items-center justify-between mb-3">
         <span class="text-sm font-semibold text-zinc-800">Pipeline</span>
         <span class="text-[10px] text-zinc-400">Today</span>
@@ -228,7 +228,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;color:#18181b;background-color:#
 
   <!-- Bottom-right: integrations -->
   <div class="absolute right-[3%] bottom-[10%] w-52 hidden lg:block">
-    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.09)] p-4 border border-gray-100 group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <div class="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.09)] p-4 border border-gray-100 group cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rotate-[1.5deg]">
       <div class="text-sm font-semibold text-zinc-800 mb-3 flex items-center justify-between">
         <span data-i18n="integrations_label">50+ Integrations</span>
         <span class="opacity-0 group-hover:opacity-100 text-[10px] text-blue-600 font-semibold transition-opacity duration-500">View all</span>
@@ -1458,67 +1458,7 @@ const statObs = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.stat-num').forEach(el => statObs.observe(el));
 
-// ============ INTEGRATION GRID FLOATING & REPULSION (From animation.md) ============
-const gridCards = document.querySelectorAll('.integ-card');
-if(gridCards.length && window.innerWidth > 768) {
-  let repelMouseX = window.innerWidth / 2;
-  let repelMouseY = window.innerHeight / 2;
-  let targetX = repelMouseX;
-  let targetY = repelMouseY;
-  
-  // smooth cursor interpolation
-  function followMouse() {
-    repelMouseX += (targetX - repelMouseX) * 0.15;
-    repelMouseY += (targetY - repelMouseY) * 0.15;
-    requestAnimationFrame(followMouse);
-  }
-  requestAnimationFrame(followMouse);
-
-  document.addEventListener('mousemove', e => {
-    targetX = e.clientX;
-    targetY = e.clientY;
-  });
-
-  gridCards.forEach((card, index) => {
-    let baseTranslateX = 0, baseTranslateY = 0, baseRotate = 0;
-    let speed = 5 + Math.random() * 5; 
-    let repX = 0, repY = 0, currentX = 0, currentY = 0;
-    let timeOffset = index * 300; // stagger
-
-    function animateCard(time) {
-       // User requested 'static default, only move when triggered by cursor'
-       baseTranslateX = 0;
-       baseTranslateY = 0;
-       baseRotate = 0;
-
-       const rect = card.getBoundingClientRect();
-       const centerX = rect.left + rect.width / 2;
-       const centerY = rect.top + rect.height / 2;
-       const dx = repelMouseX - centerX;
-       const dy = repelMouseY - centerY;
-       const distance = Math.sqrt(dx*dx + dy*dy);
-
-       // If cursor is close, repel away exactly like animation.md prompt
-       if (distance < 150) {
-         const angle = Math.atan2(dy, dx);
-         const force = (1 - distance / 150) * 50; 
-         repX = -Math.cos(angle) * force;
-         repY = -Math.sin(angle) * force;
-       } else {
-         repX = 0;
-         repY = 0;
-       }
-
-       currentX += (repX - currentX) * 0.1;
-       currentY += (repY - currentY) * 0.1;
-
-       // Use translate exactly as specified in animation.md (x, y, rotate)
-       card.style.transform = `translate(${baseTranslateX + currentX}px, ${baseTranslateY + currentY}px) rotate(${baseRotate}deg)`;
-       requestAnimationFrame(animateCard);
-    }
-    requestAnimationFrame(animateCard);
-  });
-}
+// Integrations Javascript removed.
 </script>
 </body>
 </html>
