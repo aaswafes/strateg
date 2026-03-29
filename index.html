@@ -1367,5 +1367,15 @@ const statObs = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.stat-num').forEach(el => statObs.observe(el));
 </script>
+
+<!-- Supabase SDK & Init -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const _supabaseUrl = 'https://chpmywawijsqnwsdzihv.supabase.co';
+  const _supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNocG15d2F3aWpzcW53c2R6aWh2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxOTk2NjksImV4cCI6MjA1ODc3NTY2OX0.v8P_OM1MTIxN30.zipRU-9Wbkag2FEWoNqUtu6Dn3_ggTGk2IQS_C3HL_w';
+  const supabaseClient = supabase.createClient(_supabaseUrl, _supabaseAnonKey);
+  console.log('Supabase initialized successfully!');
+</script>
+
 </body>
 </html>
