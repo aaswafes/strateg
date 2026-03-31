@@ -390,6 +390,9 @@
       background: linear-gradient(180deg, #2563eb 0%, #93c5fd 100%)
     }
 
+    /* Lift content above dot-wave canvas (z-index:0) */
+    section, footer, #mobile-menu { position: relative; z-index: 1; }
+
     /* animation.md: integ-card pop-in */
     .integ-card {
       opacity: 0
@@ -2590,13 +2593,14 @@
     // Dot wave background (no cursor interaction)
     (function () {
       const canvas = document.createElement('canvas');
-      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;';
+      // z-index:0 — above html background, sections are z-index:1 so content stays on top
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
       document.body.insertBefore(canvas, document.body.firstChild);
 
       const ctx = canvas.getContext('2d');
       const SPACING = 22;
-      const RADIUS = 1.2;
-      const R = 209, G = 213, B = 219; // #d1d5db
+      const RADIUS = 1.4;
+      const R = 180, G = 185, B = 195; // slightly darker than #d1d5db for contrast
 
       let w = 0, h = 0;
       function resize() {
@@ -2608,16 +2612,21 @@
 
       let t = 0;
       function frame() {
-        ctx.clearRect(0, 0, w, h);
+        // Fill background color so canvas isn't transparent
+        ctx.fillStyle = '#f4f5f7';
+        ctx.fillRect(0, 0, w, h);
+
         const cols = Math.ceil(w / SPACING) + 2;
         const rows = Math.ceil(h / SPACING) + 2;
 
         for (let c = 0; c < cols; c++) {
           for (let r = 0; r < rows; r++) {
-            // Two sine waves travelling in different diagonal directions
-            const w1 = Math.sin(c * 0.38 + r * 0.28 - t) * 0.5 + 0.5;
-            const w2 = Math.sin(c * 0.14 - r * 0.22 + t * 0.55) * 0.4 + 0.4;
-            const alpha = 0.18 + (w1 * 0.65 + w2 * 0.35) * 0.55;
+            // Two diagonal waves in opposite directions
+            const w1 = Math.sin(c * 0.38 + r * 0.3 - t) * 0.5 + 0.5;
+            const w2 = Math.sin(c * 0.18 - r * 0.24 + t * 0.6) * 0.5 + 0.5;
+            const combined = w1 * 0.6 + w2 * 0.4;
+            // Alpha swings from 0.15 (nearly invisible) to 0.85 (clearly visible)
+            const alpha = 0.15 + combined * 0.7;
 
             ctx.beginPath();
             ctx.arc(c * SPACING, r * SPACING, RADIUS, 0, Math.PI * 2);
@@ -2626,7 +2635,7 @@
           }
         }
 
-        t += 0.02;
+        t += 0.022;
         requestAnimationFrame(frame);
       }
       frame();
