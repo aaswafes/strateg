@@ -23,15 +23,14 @@
 
     html {
       scroll-behavior: smooth;
-      overflow-x: hidden
+      overflow-x: hidden;
+      background-color: #f4f5f7
     }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       color: #18181b;
-      background-color: #f4f5f7;
-      background-image: radial-gradient(circle, #d1d5db 1.2px, transparent 1.2px);
-      background-size: 22px 22px;
+      background-color: transparent;
       overflow-x: hidden;
       max-width: 100vw
     }
@@ -2587,6 +2586,51 @@
     document.querySelectorAll('.stat-num').forEach(el => statObs.observe(el));
 
     // Integrations Javascript removed.
+
+    // Dot wave background (no cursor interaction)
+    (function () {
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;';
+      document.body.insertBefore(canvas, document.body.firstChild);
+
+      const ctx = canvas.getContext('2d');
+      const SPACING = 22;
+      const RADIUS = 1.2;
+      const R = 209, G = 213, B = 219; // #d1d5db
+
+      let w = 0, h = 0;
+      function resize() {
+        canvas.width = w = window.innerWidth;
+        canvas.height = h = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      let t = 0;
+      function frame() {
+        ctx.clearRect(0, 0, w, h);
+        const cols = Math.ceil(w / SPACING) + 2;
+        const rows = Math.ceil(h / SPACING) + 2;
+
+        for (let c = 0; c < cols; c++) {
+          for (let r = 0; r < rows; r++) {
+            // Two sine waves travelling in different diagonal directions
+            const w1 = Math.sin(c * 0.38 + r * 0.28 - t) * 0.5 + 0.5;
+            const w2 = Math.sin(c * 0.14 - r * 0.22 + t * 0.55) * 0.4 + 0.4;
+            const alpha = 0.18 + (w1 * 0.65 + w2 * 0.35) * 0.55;
+
+            ctx.beginPath();
+            ctx.arc(c * SPACING, r * SPACING, RADIUS, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${R},${G},${B},${alpha.toFixed(2)})`;
+            ctx.fill();
+          }
+        }
+
+        t += 0.02;
+        requestAnimationFrame(frame);
+      }
+      frame();
+    })();
 
     // Mobile menu
     function toggleMobileMenu() {
