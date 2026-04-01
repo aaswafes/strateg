@@ -24,7 +24,9 @@
     html {
       scroll-behavior: smooth;
       overflow-x: hidden;
-      background-color: #f4f5f7
+      background-color: #f4f5f7;
+      background-image: radial-gradient(circle, rgba(180,185,195,0.55) 1.4px, transparent 1.4px);
+      background-size: 22px 22px;
     }
 
     body {
@@ -390,8 +392,7 @@
       background: linear-gradient(180deg, #2563eb 0%, #93c5fd 100%)
     }
 
-    /* Lift content above dot-wave canvas (z-index:0) */
-    section, footer, #mobile-menu { position: relative; z-index: 1; }
+    section, footer, #mobile-menu { position: relative; }
 
     /* animation.md: integ-card pop-in */
     .integ-card {
@@ -402,10 +403,160 @@
       opacity: 1;
       transition: opacity 0.7s cubic-bezier(.16, 1, .3, 1)
     }
+
+    /* ===== MATRIX MODE ===== */
+    #matrix-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2.5s ease;
+    }
+    #matrix-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.50);
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 2.5s ease;
+    }
+    html.matrix-mode #matrix-video,
+    html.matrix-mode #matrix-overlay { opacity: 1; }
+
+    html.matrix-mode {
+      background-color: #040810 !important;
+      background-image: none !important;
+    }
+    html.matrix-mode section,
+    html.matrix-mode footer { background: transparent !important; }
+
+    /* Nav pill */
+    html.matrix-mode nav > div {
+      background: rgba(4,8,20,0.75) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+    }
+    html.matrix-mode nav a { color: rgba(255,255,255,0.80) !important; }
+    html.matrix-mode nav a:hover { color: white !important; }
+    html.matrix-mode nav span.text-zinc-900 { color: white !important; }
+    html.matrix-mode #mob-burger span { background-color: white !important; }
+
+    /* Cards */
+    html.matrix-mode .bg-white {
+      background: rgba(255,255,255,0.07) !important;
+      backdrop-filter: blur(22px) !important;
+      -webkit-backdrop-filter: blur(22px) !important;
+    }
+    html.matrix-mode .bg-gray-50 {
+      background: rgba(255,255,255,0.05) !important;
+      backdrop-filter: blur(22px) !important;
+      -webkit-backdrop-filter: blur(22px) !important;
+    }
+    html.matrix-mode .bg-gray-100 { background: rgba(255,255,255,0.10) !important; }
+    html.matrix-mode .border-gray-100,
+    html.matrix-mode .border-gray-200 { border-color: rgba(255,255,255,0.10) !important; }
+
+    /* Text */
+    html.matrix-mode .text-zinc-900,
+    html.matrix-mode .text-zinc-800,
+    html.matrix-mode .text-zinc-700 { color: rgba(255,255,255,0.95) !important; }
+    html.matrix-mode .text-zinc-600,
+    html.matrix-mode .text-zinc-500,
+    html.matrix-mode .text-zinc-400,
+    html.matrix-mode .text-gray-700,
+    html.matrix-mode .text-gray-600,
+    html.matrix-mode .text-gray-500 { color: rgba(255,255,255,0.60) !important; }
+    html.matrix-mode .text-blue-600,
+    html.matrix-mode .text-blue-700 { color: #93c5fd !important; }
+    html.matrix-mode .bg-blue-50 { background: rgba(37,99,235,0.18) !important; }
+
+    /* Dark blocks */
+    html.matrix-mode .bg-zinc-900 {
+      background: rgba(0,0,0,0.40) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+    html.matrix-mode .bg-zinc-800 {
+      background: rgba(255,255,255,0.08) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+    }
+
+    /* Service / pricing cards */
+    html.matrix-mode .service-card {
+      background: rgba(255,255,255,0.06) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+    }
+
+    /* Mobile menu */
+    html.matrix-mode #mobile-menu {
+      background: rgba(4,8,20,0.92) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+    }
+    html.matrix-mode .mob-nav-link { color: rgba(255,255,255,0.80) !important; }
+    html.matrix-mode .mob-nav-link:hover { background: rgba(255,255,255,0.08) !important; }
+    html.matrix-mode .mob-lang-btn { border-color: rgba(255,255,255,0.15) !important; color: rgba(255,255,255,0.70) !important; }
+
+    /* Lang popup */
+    html.matrix-mode .lang-popup {
+      background: rgba(4,8,20,0.95) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+    }
+    html.matrix-mode .lang-option { color: rgba(255,255,255,0.70) !important; }
+    html.matrix-mode .lang-option:hover { background: rgba(255,255,255,0.10) !important; color: white !important; }
+
+    /* Music control button */
+    #music-btn {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 9999;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(37,99,235,0.5);
+      background: rgba(37,99,235,0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+    }
+    #music-btn:hover { background: rgba(37,99,235,0.38); transform: scale(1.10); }
   </style>
 </head>
 
 <body>
+
+  <!-- MATRIX: audio + video bg -->
+  <audio id="matrix-audio" src="Matrix.flac" loop preload="auto"></audio>
+  <video id="matrix-video" src="Background.mp4" loop muted playsinline></video>
+  <div id="matrix-overlay"></div>
+
+  <!-- Music control -->
+  <button id="music-btn" aria-label="Toggle music" title="Toggle music">
+    <!-- Playing icon (music note) -->
+    <svg id="music-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <path d="M9 18V5l12-2v13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6" cy="18" r="3" stroke="white" stroke-width="2"/>
+      <circle cx="18" cy="16" r="3" stroke="white" stroke-width="2"/>
+    </svg>
+    <!-- Muted icon (note + slash) -->
+    <svg id="music-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:none">
+      <path d="M9 18V5l12-2v13" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="6" cy="18" r="3" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+      <circle cx="18" cy="16" r="3" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+      <line x1="3" y1="3" x2="21" y2="21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
 
   <!-- NAV -->
   <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4">
@@ -700,6 +851,11 @@
 
     <!-- Hero text -->
     <div class="text-center max-w-3xl mx-auto">
+      <!-- What it is — one clear line -->
+      <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 mb-6">
+        <div class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
+        <span class="text-xs font-semibold text-blue-700 tracking-wide" data-i18n="hero_tag">AI Sales Agent · Telegram · Bitrix24</span>
+      </div>
       <h1 style="font-weight:800" class="text-[2.4rem] sm:text-5xl md:text-[68px] tracking-tighter leading-[1.05] text-zinc-900"
         data-i18n-html="hero_h1">Sell more.<br>Wait less.</h1>
       <p style="font-weight:800" class="text-[2.4rem] sm:text-5xl md:text-[68px] tracking-tighter leading-[1.05] text-zinc-300 mt-1"
@@ -707,55 +863,123 @@
       <p class="text-base text-zinc-500 leading-relaxed max-w-[52ch] mx-auto mt-6 mb-8" data-i18n="hero_sub">Strateg AI
         runs your Telegram outreach, qualifies leads in real time, and syncs every deal straight into Bitrix24 — while
         you focus on closing.</p>
-      <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank"
-        class="inline-flex items-center gap-2.5 bg-blue-600 text-white font-semibold px-8 py-4 rounded-full text-base btn"
-        data-i18n="hero_cta">Get free demo</a>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank"
+          class="inline-flex items-center gap-2.5 bg-blue-600 text-white font-semibold px-8 py-4 rounded-full text-base btn"
+          data-i18n="hero_cta">Get free demo</a>
+        <a href="#how" class="inline-flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-zinc-800 transition-colors px-4 py-4" data-i18n="hero_see_how">See how it works →</a>
+      </div>
     </div>
   </section>
 
 
-  <!-- MARQUEE -->
-  <div class="bg-white border-y border-gray-100 py-4 overflow-hidden">
-    <div class="marquee-track gap-8" style="width:max-content">
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Telegram AI</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Instagram AI</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">LinkedIn Outreach</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">TikTok Content</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">X / Twitter Posts</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">AI Sales Calls</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">SMM Management</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Lead Qualification</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Bitrix24 Sync</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <!-- duplicate -->
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Telegram AI</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Instagram AI</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">LinkedIn Outreach</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">TikTok Content</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">X / Twitter Posts</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">AI Sales Calls</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">SMM Management</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Lead Qualification</span><span
-        class="text-zinc-200 mx-2">·</span>
-      <span class="text-zinc-400 text-xs font-semibold uppercase tracking-[.18em] mx-5">Bitrix24 Sync</span><span
-        class="text-zinc-200 mx-2">·</span>
+  <!-- PROBLEM STRIP -->
+  <section class="py-12 px-4 bg-white border-t border-b border-gray-100" style="position:relative;z-index:1">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
+        <!-- Before -->
+        <div class="p-8 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
+          <div class="flex items-center gap-2 mb-5">
+            <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <span class="text-sm font-bold text-zinc-500 uppercase tracking-widest" data-i18n="prob_before">Without Strateg AI</span>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob1">Sales team spends 4+ hours/day manually following up in Telegram</span></li>
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob2">Leads go cold while your team sleeps or is busy</span></li>
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob3">No lead tracking — deals fall through the cracks</span></li>
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob4">CRM (Bitrix24) is always out of date</span></li>
+          </ul>
+        </div>
+        <!-- After -->
+        <div class="p-8 bg-white">
+          <div class="flex items-center gap-2 mb-5">
+            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="text-sm font-bold text-blue-600 uppercase tracking-widest" data-i18n="prob_after">With Strateg AI</span>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol1">AI replies to every lead in under 5 seconds — 24/7, no days off</span></li>
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol2">Qualifies, scores, and follows up with every lead automatically</span></li>
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol3">Every deal tracked — nothing falls through the cracks</span></li>
+            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol4">Bitrix24 updated instantly, automatically, every time</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="py-16 md:py-28 px-4 bg-transparent border-t border-gray-100">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-16 text-center reveal">
+        <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 mb-4">
+          <div class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
+          <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500" data-i18n="how_badge">How it
+            works</span>
+        </div>
+        <h2 style="font-weight:800" class="text-3xl md:text-4xl lg:text-5xl tracking-tighter text-zinc-900" data-i18n="how_h2">Up
+          and running in 3 steps</h2>
+      </div>
+
+      <div class="relative">
+        <!-- Vertical line -->
+        <div class="absolute left-6 top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-600 to-blue-100 hidden md:block">
+        </div>
+
+        <div class="space-y-8">
+
+          <!-- Step 1 -->
+          <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 reveal">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 relative z-10">
+              1</div>
+            <div
+              class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
+              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step1_title">We connect your
+                accounts</h4>
+              <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step1_desc">We link Strateg AI to your
+                Telegram, Instagram, LinkedIn, Bitrix24, and any other channels you use. No code required from your side
+                — we handle the entire setup.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 reveal" style="animation-delay:100ms">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 relative z-10">
+              2</div>
+            <div
+              class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
+              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step2_title">AI learns your
+                sales process</h4>
+              <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step2_desc">We train the AI on your product,
+                pricing, objections, and tone of voice. It learns to reply exactly how your best sales rep would — in
+                Uzbek, Russian, or English.</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 reveal" style="animation-delay:200ms">
+            <div
+              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 relative z-10">
+              3</div>
+            <div
+              class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
+              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step3_title">Leads flow in. You
+                close deals.</h4>
+              <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step3_desc">The AI handles outreach,
+                follow-ups, content, and qualification around the clock. Qualified leads land in your Bitrix24 pipeline.
+                You focus on the conversations that matter.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
 
 
   <!-- FEATURES BENTO -->
@@ -865,26 +1089,41 @@
 
       <!-- Row 2 -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-        <!-- Lead scoring col-5 blue -->
+        <!-- SMM Auto-post col-5 blue -->
         <div
           class="md:col-span-5 card-hover bg-blue-600 rounded-3xl p-8 border-0 shadow-[0_4px_24px_rgba(37,99,235,0.22)] reveal-scale"
           style="animation-delay:120ms">
           <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center mb-6">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M11 3l2.5 5.5 6 .5-4.5 4 1.5 6L11 16l-5.5 3 1.5-6-4.5-4 6-.5L11 3Z" stroke="white"
-                stroke-width="1.4" stroke-linejoin="round" />
+              <rect x="2" y="3" width="18" height="13" rx="2.5" stroke="white" stroke-width="1.4"/>
+              <path d="M6 8h10M6 11h6" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="17" cy="17" r="3.5" fill="white"/>
+              <path d="M17 15.5v3M15.5 17h3" stroke="#2563eb" stroke-width="1.4" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3 style="font-weight:700" class="text-xl text-white mb-2 tracking-tight" data-i18n="feat3_title">Smart lead
-            scoring</h3>
-          <p class="text-sm text-blue-200 leading-relaxed mb-6" data-i18n="feat3_desc">AI scores every prospect 1–100
-            based on their replies. Your team only spends time on leads worth their attention.</p>
-          <div class="bg-white/10 rounded-2xl p-4">
-            <div class="flex items-center justify-between mb-2"><span class="text-xs text-blue-200"
-                data-i18n="feat3_label">Avg. score this week</span><span style="font-weight:800"
-                class="text-2xl text-white">83<span class="text-sm font-normal text-blue-300">/100</span></span></div>
-            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-              <div class="h-full bg-white rounded-full" style="width:83%"></div>
+          <h3 style="font-weight:700" class="text-xl text-white mb-2 tracking-tight" data-i18n="feat3_title">SMM posts on autopilot</h3>
+          <p class="text-sm text-blue-200 leading-relaxed mb-6" data-i18n="feat3_desc">AI writes, schedules, and publishes posts to Instagram, Telegram, and LinkedIn — every day, without lifting a finger.</p>
+          <div class="bg-white/10 rounded-2xl p-4 space-y-2.5">
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
+                <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="5.5" stroke="white" stroke-width="1.8"/><circle cx="11" cy="11" r="4" stroke="white" stroke-width="1.8"/><circle cx="16.5" cy="5.5" r="1.4" fill="white"/></svg>
+              </div>
+              <span class="text-xs text-blue-100 flex-1">Instagram · Today 10:00</span>
+              <div class="w-1.5 h-1.5 rounded-full bg-green-300 pulse-live"></div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 2 2 10l7 3 2 7 3-4 5 4L22 2Z" fill="white"/></svg>
+              </div>
+              <span class="text-xs text-blue-100 flex-1">Telegram · Today 14:00</span>
+              <span class="text-[10px] text-blue-300 font-semibold">SCHEDULED</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="white" fill-opacity=".15" stroke="white" stroke-width="1.6"/><path d="M8 17V10M12 17V7M16 17v-4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </div>
+              <span class="text-xs text-blue-100 flex-1">LinkedIn · Tomorrow 09:00</span>
+              <span class="text-[10px] text-blue-300 font-semibold">QUEUED</span>
             </div>
           </div>
         </div>
@@ -1718,6 +1957,7 @@
   <!-- Supabase SDK & Init -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
   <!-- SOLUTIONS / ALL SERVICES -->
   <section id="solutions" class="py-16 md:py-28 px-4 bg-transparent border-t border-gray-100">
     <div class="max-w-6xl mx-auto">
@@ -1859,80 +2099,6 @@
       </div>
     </div>
   </section>
-
-
-  <!-- HOW IT WORKS -->
-  <section id="how" class="py-16 md:py-28 px-4 bg-transparent border-t border-gray-100">
-    <div class="max-w-4xl mx-auto">
-      <div class="mb-16 text-center reveal">
-        <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 mb-4">
-          <div class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-          <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500" data-i18n="how_badge">How it
-            works</span>
-        </div>
-        <h2 style="font-weight:800" class="text-3xl md:text-4xl lg:text-5xl tracking-tighter text-zinc-900" data-i18n="how_h2">Up
-          and running in 3 steps</h2>
-      </div>
-
-      <div class="relative">
-        <!-- Vertical line -->
-        <div class="absolute left-6 top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-600 to-blue-100 hidden md:block">
-        </div>
-
-        <div class="space-y-8">
-
-          <!-- Step 1 -->
-          <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 reveal">
-            <div
-              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 relative z-10">
-              1</div>
-            <div
-              class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
-              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step1_title">We connect your
-                accounts</h4>
-              <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step1_desc">We link Strateg AI to your
-                Telegram, Instagram, LinkedIn, Bitrix24, and any other channels you use. No code required from your side
-                — we handle the entire setup.</p>
-            </div>
-          </div>
-
-          <!-- Step 2 -->
-          <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 reveal" style="animation-delay:100ms">
-            <div
-              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 relative z-10">
-              2</div>
-            <div
-              class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
-              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step2_title">AI learns your
-                sales process</h4>
-              <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step2_desc">We train the AI on your product,
-                pricing, objections, and tone of voice. It learns to reply exactly how your best sales rep would — in
-                Uzbek, Russian, or English.</p>
-            </div>
-          </div>
-
-          <!-- Step 3 -->
-          <div class="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 reveal" style="animation-delay:200ms">
-            <div
-              class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 relative z-10">
-              3</div>
-            <div
-              class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
-              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step3_title">Leads flow in. You
-                close deals.</h4>
-              <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step3_desc">The AI handles outreach,
-                follow-ups, content, and qualification around the clock. Qualified leads land in your Bitrix24 pipeline.
-                You focus on the conversations that matter.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
 
 
   <!-- TESTIMONIALS -->
@@ -2364,11 +2530,21 @@
         nav_signin: "Sign in", nav_demo: "Get demo",
         hero_h1: "Sell more.<br>Wait less.", hero_h2: "all on autopilot.",
         hero_sub: "Strateg AI runs your Telegram outreach, qualifies leads in real time, and syncs every deal straight into Bitrix24 — while you focus on closing.",
+        hero_tag: "AI Sales Agent · Telegram · Bitrix24", hero_see_how: "See how it works →",
         hero_cta: "Get free demo", integrations_label: "50+ Integrations",
+        prob_before: "PROBLEM", prob_after: "Strateg AI",
+        prob1: "Sales team spends 4+ hours waiting to reply to leads in Telegram",
+        prob2: "Leads go cold while your team sleeps or is busy",
+        prob3: "SMM team can't keep up with deadlines",
+        prob4: "CRM is always out of date",
+        sol1: "AI replies to every lead in under 5 seconds — 24/7, no days off",
+        sol2: "Qualifies, scores, and follows up with every lead automatically",
+        sol3: "Posts to social media automatically, on your schedule",
+        sol4: "CRM updated instantly and automatically",
         features_badge: "Features", features_h2: "Built to close deals,<br>not just send messages.",
         feat1_title: "Human-quality AI conversations", feat1_desc: "The AI engages prospects like a real sales rep — asking the right questions, handling objections, and moving leads forward without rest.",
         feat2_title: "Instant Bitrix24 sync", feat2_desc: "Every qualified lead, message, and deal stage — pushed to your CRM automatically. Zero manual entry.",
-        feat3_title: "Smart lead scoring", feat3_desc: "AI scores every prospect 1–100 based on their replies. Your team only spends time on leads worth their attention.", feat3_label: "Avg. score this week",
+        feat3_title: "SMM posts on autopilot", feat3_desc: "AI writes, schedules, and publishes posts to Instagram, Telegram, and LinkedIn — every day, without lifting a finger.",
         feat4_title: "Revenue analytics in one clear view", feat4_desc: "Conversion rates, response times, pipeline value — no spreadsheets, no guesswork.",
         stat_conv: "Conversations", stat_leads: "Qualified leads", stat_close: "Close rate",
         solutions_badge: "Solutions", solutions_h2: "One AI team.<br>Every channel covered.",
@@ -2413,11 +2589,21 @@
         nav_signin: "Войти", nav_demo: "Получить демо",
         hero_h1: "Продавайте больше.<br>Ждите меньше.", hero_h2: "всё на автопилоте.",
         hero_sub: "Strateg AI ведёт вашу переписку в Telegram, квалифицирует лидов в реальном времени и отправляет каждую сделку в Bitrix24 — пока вы занимаетесь закрытием.",
+        hero_tag: "AI Агент продаж · Telegram · Bitrix24", hero_see_how: "Как это работает →",
         hero_cta: "Получить демо бесплатно", integrations_label: "50+ интеграций",
+        prob_before: "ПРОБЛЕМА", prob_after: "Strateg AI",
+        prob1: "Отдел продаж тратит 4+ часа на ответы клиентам в Telegram",
+        prob2: "Лиды остывают пока команда спит или занята",
+        prob3: "SMM-команда не справляется с дедлайнами",
+        prob4: "CRM всегда устаревшая",
+        sol1: "AI отвечает каждому лиду за 5 секунд — 24/7, без выходных",
+        sol2: "Квалифицирует, оценивает и ведёт каждого лида автоматически",
+        sol3: "Публикует в соцсетях автоматически по вашему расписанию",
+        sol4: "CRM обновляется мгновенно и автоматически",
         features_badge: "Функции", features_h2: "Создан для закрытия сделок,<br>а не просто для рассылки.",
         feat1_title: "AI-диалоги как у живого менеджера", feat1_desc: "AI общается с лидами как настоящий менеджер по продажам — задаёт правильные вопросы, отрабатывает возражения и продвигает сделки 24/7.",
         feat2_title: "Мгновенная синхронизация с Bitrix24", feat2_desc: "Каждый квалифицированный лид, каждое сообщение, каждый этап — автоматически в вашей CRM. Ноль ручного ввода.",
-        feat3_title: "Умный скоринг лидов", feat3_desc: "AI оценивает каждого лида от 1 до 100 по его ответам. Ваша команда работает только с теми, кто действительно готов покупать.", feat3_label: "Средний балл за неделю",
+        feat3_title: "SMM-посты на автопилоте", feat3_desc: "AI пишет, планирует и публикует посты в Instagram, Telegram и LinkedIn — каждый день, без вашего участия.",
         feat4_title: "Аналитика выручки в одном месте", feat4_desc: "Конверсии, время ответа, стоимость pipeline — без таблиц и догадок.",
         stat_conv: "Разговоры", stat_leads: "Квалифицированные лиды", stat_close: "Закрываемость",
         solutions_badge: "Решения", solutions_h2: "Одна AI-команда.<br>Все каналы закрыты.",
@@ -2462,11 +2648,21 @@
         nav_signin: "Kirish", nav_demo: "Demo olish",
         hero_h1: "Ko'proq soting.<br>Kamroq kuting.", hero_h2: "hammasi avtomatik.",
         hero_sub: "Strateg AI Telegram orqali muloqot qiladi, lidlarni real vaqtda tekshiradi va har bir bitimni Bitrix24ga yuboradi — siz esa yopishga e'tibor qarating.",
+        hero_tag: "AI Savdo Agenti · Telegram · Bitrix24", hero_see_how: "Qanday ishlaydi →",
         hero_cta: "Bepul demo olish", integrations_label: "50+ integratsiya",
+        prob_before: "MUAMMO", prob_after: "Strateg AI",
+        prob1: "Savdo jamoasi Telegramda mijozlarga javob yozganigacha 4+ soat vaqt ketadi",
+        prob2: "Jamoa uxlab yoki band bo'lganda lidlar sovib ketadi",
+        prob3: "SMM jamoasi 'deadline' lar bilan kelishmaydi",
+        prob4: "CRM doim eskirgan bo'ladi",
+        sol1: "Sun'iy Intelekt har bir lidga 5 soniyada javob beradi — 24/7, dam olishsiz",
+        sol2: "Har bir lidni avtomatik tekshiradi, baholaydi va kuzatadi",
+        sol3: "Ijtimoiy tarmoqlarga belgilangan paytda o'zi joylaydi",
+        sol4: "CRM darhol va avtomatik yangilanadi",
         features_badge: "Imkoniyatlar", features_h2: "Bitimlarni yopish uchun<br>yaratilgan.",
         feat1_title: "Haqiqiy menejer sifatli Sun'iy Intelekt suhbatlar", feat1_desc: "Sun'iy Intelekt real sotuvchi kabi lidlar bilan muloqot qiladi — to'g'ri savollar beradi, e'tirozlarni hal qiladi va bitimlarni davom ettiradi.",
         feat2_title: "Bitrix24 bilan bir lahzada sinxronizatsiya", feat2_desc: "Har bir kvalifitsiyalangan lid, xabar va bitim bosqichi — CRMingizga avtomatik yuboriladi. Qo'lda kiritish yo'q.",
-        feat3_title: "Aqlli lid ballash tizimi", feat3_desc: "Sun'iy Intelekt har bir lidni 1–100 ball bilan baholaydi. Jamoangiz faqat haqiqatan ham sotib olishga tayyor kishilar bilan ishlaydi.", feat3_label: "Haftalik o'rtacha ball",
+        feat3_title: "SMM postlar avtomatik", feat3_desc: "Sun'iy Intelekt Instagram, Telegram va LinkedInda postlarni yozadi, rejalashtiradi va nashr qiladi — har kuni, siz aralashmaysiz.",
         feat4_title: "Daromad tahlili — bir joyda", feat4_desc: "Konversiya, javob vaqti, pipeline qiymati — jadvallar va taxminsiz.",
         stat_conv: "Suhbatlar", stat_leads: "Kvalifitsiyalangan lidlar", stat_close: "Yopish darajasi",
         solutions_badge: "Yechimlar", solutions_h2: "Bitta Sun'iy Intelekt jamoa.<br>Barcha kanallar qoplangan.",
@@ -2590,56 +2786,6 @@
 
     // Integrations Javascript removed.
 
-    // Dot wave background (no cursor interaction)
-    (function () {
-      const canvas = document.createElement('canvas');
-      // z-index:0 — above html background, sections are z-index:1 so content stays on top
-      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;';
-      document.body.insertBefore(canvas, document.body.firstChild);
-
-      const ctx = canvas.getContext('2d');
-      const SPACING = 22;
-      const RADIUS = 1.4;
-      const R = 180, G = 185, B = 195; // slightly darker than #d1d5db for contrast
-
-      let w = 0, h = 0;
-      function resize() {
-        canvas.width = w = window.innerWidth;
-        canvas.height = h = window.innerHeight;
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      let t = 0;
-      function frame() {
-        // Fill background color so canvas isn't transparent
-        ctx.fillStyle = '#f4f5f7';
-        ctx.fillRect(0, 0, w, h);
-
-        const cols = Math.ceil(w / SPACING) + 2;
-        const rows = Math.ceil(h / SPACING) + 2;
-
-        for (let c = 0; c < cols; c++) {
-          for (let r = 0; r < rows; r++) {
-            // Two diagonal waves in opposite directions
-            const w1 = Math.sin(c * 0.38 + r * 0.3 - t) * 0.5 + 0.5;
-            const w2 = Math.sin(c * 0.18 - r * 0.24 + t * 0.6) * 0.5 + 0.5;
-            const combined = w1 * 0.6 + w2 * 0.4;
-            // Alpha swings from 0.15 (nearly invisible) to 0.85 (clearly visible)
-            const alpha = 0.15 + combined * 0.7;
-
-            ctx.beginPath();
-            ctx.arc(c * SPACING, r * SPACING, RADIUS, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${R},${G},${B},${alpha.toFixed(2)})`;
-            ctx.fill();
-          }
-        }
-
-        t += 0.022;
-        requestAnimationFrame(frame);
-      }
-      frame();
-    })();
 
     // Mobile menu
     function toggleMobileMenu() {
@@ -2731,6 +2877,55 @@
         }, { passive: false });
         el.addEventListener('touchend', endDrag);
       });
+    })();
+
+    // ===== MATRIX SOUNDTRACK + THEME TRIGGER =====
+    (function () {
+      const audio = document.getElementById('matrix-audio');
+      const video = document.getElementById('matrix-video');
+      const btn   = document.getElementById('music-btn');
+      const iconOn  = document.getElementById('music-icon-on');
+      const iconOff = document.getElementById('music-icon-off');
+      let matrixDone = false;
+
+      function setIconState(playing) {
+        iconOn.style.display  = playing ? 'block' : 'none';
+        iconOff.style.display = playing ? 'none'  : 'block';
+      }
+
+      function activateMatrix() {
+        if (matrixDone) return;
+        matrixDone = true;
+        document.documentElement.classList.add('matrix-mode');
+        video.play().catch(function(){});
+      }
+
+      audio.addEventListener('timeupdate', function () {
+        if (!matrixDone && audio.currentTime >= 24) activateMatrix();
+      });
+
+      btn.addEventListener('click', function () {
+        if (audio.paused) {
+          audio.play().then(function(){ setIconState(true); }).catch(function(){});
+        } else {
+          audio.pause();
+          setIconState(false);
+        }
+      });
+
+      function tryAutoplay() {
+        audio.play().then(function () {
+          setIconState(true);
+        }).catch(function () {
+          setIconState(false); // show muted icon — user must click
+        });
+      }
+
+      if (document.readyState === 'complete') {
+        tryAutoplay();
+      } else {
+        window.addEventListener('load', tryAutoplay);
+      }
     })();
   </script>
 </body>
