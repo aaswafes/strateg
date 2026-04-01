@@ -25,7 +25,7 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       background-color: #f4f5f7;
-      background-image: radial-gradient(circle, rgba(180,185,195,0.55) 1.4px, transparent 1.4px);
+      background-image: radial-gradient(circle, rgba(180, 185, 195, 0.55) 1.4px, transparent 1.4px);
       background-size: 22px 22px;
     }
 
@@ -43,11 +43,23 @@
 
     /* Widget drag & settle */
     @keyframes widget-settle {
-      0%   { transform: scale(1); }
-      30%  { transform: scale(0.95); }
-      65%  { transform: scale(1.02); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(1);
+      }
+
+      30% {
+        transform: scale(0.95);
+      }
+
+      65% {
+        transform: scale(1.02);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
+
     .widget-dragging {
       cursor: grabbing !important;
       transform: scale(1.02) !important;
@@ -56,9 +68,11 @@
       animation: none !important;
       user-select: none;
     }
+
     .widget-settling {
       animation: widget-settle 0.45s ease-out forwards !important;
     }
+
     .hero-widget {
       cursor: grab;
       user-select: none;
@@ -74,11 +88,15 @@
       background: white;
       border-radius: 20px;
       border: 1px solid #e5e7eb;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
       padding: 16px;
       z-index: 48;
     }
-    #mobile-menu.open { display: block; }
+
+    #mobile-menu.open {
+      display: block;
+    }
+
     .mob-nav-link {
       display: block;
       padding: 12px 12px;
@@ -89,7 +107,11 @@
       text-decoration: none;
       transition: background 0.15s;
     }
-    .mob-nav-link:hover { background: #f4f4f5; }
+
+    .mob-nav-link:hover {
+      background: #f4f4f5;
+    }
+
     .mob-lang-btn {
       flex: 1;
       padding: 9px 0;
@@ -102,7 +124,12 @@
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .mob-lang-btn:hover, .mob-lang-btn.active { border-color: #2563eb; color: #2563eb; }
+
+    .mob-lang-btn:hover,
+    .mob-lang-btn.active {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
 
     /* Handled globally by body now */
     .float-a {
@@ -392,7 +419,11 @@
       background: linear-gradient(180deg, #2563eb 0%, #93c5fd 100%)
     }
 
-    section, footer, #mobile-menu { position: relative; }
+    section,
+    footer,
+    #mobile-menu {
+      position: relative;
+    }
 
     /* animation.md: integ-card pop-in */
     .integ-card {
@@ -407,119 +438,221 @@
     /* ===== MATRIX MODE ===== */
     #matrix-video {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: -2;
       opacity: 0;
       pointer-events: none;
       transition: opacity 2.5s ease;
     }
+
     #matrix-overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.50);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.50);
       z-index: -1;
       pointer-events: none;
       opacity: 0;
       transition: opacity 2.5s ease;
     }
+
     html.matrix-mode #matrix-video,
-    html.matrix-mode #matrix-overlay { opacity: 1; }
+    html.matrix-mode #matrix-overlay {
+      opacity: 1;
+    }
 
     html.matrix-mode {
       background-color: #040810 !important;
       background-image: none !important;
     }
+
     html.matrix-mode section,
-    html.matrix-mode footer { background: transparent !important; }
+    html.matrix-mode footer {
+      background: transparent !important;
+    }
 
     /* Nav pill */
-    html.matrix-mode nav > div {
-      background: rgba(4,8,20,0.75) !important;
-      border-color: rgba(255,255,255,0.10) !important;
+    html.matrix-mode nav>div {
+      background: rgba(4, 8, 20, 0.75) !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
     }
-    html.matrix-mode nav a { color: rgba(255,255,255,0.80) !important; }
-    html.matrix-mode nav a:hover { color: white !important; }
-    html.matrix-mode nav span.text-zinc-900 { color: white !important; }
-    html.matrix-mode #mob-burger span { background-color: white !important; }
+
+    html.matrix-mode nav a {
+      color: rgba(255, 255, 255, 0.80) !important;
+    }
+
+    html.matrix-mode nav a:hover {
+      color: white !important;
+    }
+
+    html.matrix-mode nav span.text-zinc-900 {
+      color: white !important;
+    }
+
+    html.matrix-mode #mob-burger span {
+      background-color: white !important;
+    }
 
     /* Cards */
     html.matrix-mode .bg-white {
-      background: rgba(255,255,255,0.07) !important;
+      background: rgba(255, 255, 255, 0.07) !important;
       backdrop-filter: blur(22px) !important;
       -webkit-backdrop-filter: blur(22px) !important;
     }
+
     html.matrix-mode .bg-gray-50 {
-      background: rgba(255,255,255,0.05) !important;
+      background: rgba(255, 255, 255, 0.05) !important;
       backdrop-filter: blur(22px) !important;
       -webkit-backdrop-filter: blur(22px) !important;
     }
-    html.matrix-mode .bg-gray-100 { background: rgba(255,255,255,0.10) !important; }
+
+    html.matrix-mode .bg-gray-100 {
+      background: rgba(255, 255, 255, 0.10) !important;
+    }
+
     html.matrix-mode .border-gray-100,
-    html.matrix-mode .border-gray-200 { border-color: rgba(255,255,255,0.10) !important; }
+    html.matrix-mode .border-gray-200 {
+      border-color: rgba(255, 255, 255, 0.10) !important;
+    }
 
     /* Text */
     html.matrix-mode .text-zinc-900,
     html.matrix-mode .text-zinc-800,
-    html.matrix-mode .text-zinc-700 { color: rgba(255,255,255,0.95) !important; }
+    html.matrix-mode .text-zinc-700 {
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+
     html.matrix-mode .text-zinc-600,
     html.matrix-mode .text-zinc-500,
     html.matrix-mode .text-zinc-400,
     html.matrix-mode .text-gray-700,
     html.matrix-mode .text-gray-600,
-    html.matrix-mode .text-gray-500 { color: rgba(255,255,255,0.60) !important; }
+    html.matrix-mode .text-gray-500 {
+      color: rgba(255, 255, 255, 0.60) !important;
+    }
+
     html.matrix-mode .text-blue-600,
-    html.matrix-mode .text-blue-700 { color: #93c5fd !important; }
-    html.matrix-mode .bg-blue-50 { background: rgba(37,99,235,0.18) !important; }
+    html.matrix-mode .text-blue-700 {
+      color: #93c5fd !important;
+    }
+
+    html.matrix-mode .bg-blue-50 {
+      background: rgba(37, 99, 235, 0.18) !important;
+    }
 
     /* Dark blocks */
     html.matrix-mode .bg-zinc-900 {
-      background: rgba(0,0,0,0.40) !important;
+      background: rgba(0, 0, 0, 0.40) !important;
       backdrop-filter: blur(12px) !important;
       -webkit-backdrop-filter: blur(12px) !important;
     }
+
     html.matrix-mode .bg-zinc-800 {
-      background: rgba(255,255,255,0.08) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
       backdrop-filter: blur(20px) !important;
       -webkit-backdrop-filter: blur(20px) !important;
     }
 
     /* Service / pricing cards */
     html.matrix-mode .service-card {
-      background: rgba(255,255,255,0.06) !important;
-      border-color: rgba(255,255,255,0.10) !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
       backdrop-filter: blur(20px) !important;
       -webkit-backdrop-filter: blur(20px) !important;
     }
 
     /* Mobile menu */
     html.matrix-mode #mobile-menu {
-      background: rgba(4,8,20,0.92) !important;
-      border-color: rgba(255,255,255,0.10) !important;
+      background: rgba(4, 8, 20, 0.92) !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
     }
-    html.matrix-mode .mob-nav-link { color: rgba(255,255,255,0.80) !important; }
-    html.matrix-mode .mob-nav-link:hover { background: rgba(255,255,255,0.08) !important; }
-    html.matrix-mode .mob-lang-btn { border-color: rgba(255,255,255,0.15) !important; color: rgba(255,255,255,0.70) !important; }
+
+    html.matrix-mode .mob-nav-link {
+      color: rgba(255, 255, 255, 0.80) !important;
+    }
+
+    html.matrix-mode .mob-nav-link:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    html.matrix-mode .mob-lang-btn {
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      color: rgba(255, 255, 255, 0.70) !important;
+    }
 
     /* Lang popup */
     html.matrix-mode .lang-popup {
-      background: rgba(4,8,20,0.95) !important;
-      border-color: rgba(255,255,255,0.10) !important;
+      background: rgba(4, 8, 20, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.10) !important;
     }
-    html.matrix-mode .lang-option { color: rgba(255,255,255,0.70) !important; }
-    html.matrix-mode .lang-option:hover { background: rgba(255,255,255,0.10) !important; color: white !important; }
+
+    html.matrix-mode .lang-option {
+      color: rgba(255, 255, 255, 0.70) !important;
+    }
+
+    html.matrix-mode .lang-option:hover {
+      background: rgba(255, 255, 255, 0.10) !important;
+      color: white !important;
+    }
+
+    /* Stat cards (3.4×, <5 sec, 47%) */
+    html.matrix-mode .bg-white\/90 {
+      background: rgba(0, 20, 5, 0.75) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border-color: rgba(0, 255, 70, 0.18) !important;
+    }
+    html.matrix-mode .stat-num {
+      color: #ffffff !important;
+      text-shadow: 0 0 18px rgba(255,255,255,0.3) !important;
+    }
+
+    /* +30 ko'proq card */
+    html.matrix-mode .bg-gradient-to-br {
+      background: rgba(0, 20, 5, 0.75) !important;
+      border-color: rgba(255,255,255,0.15) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+    }
+    html.matrix-mode #moreIntegLabel {
+      color: rgba(255,255,255,0.85) !important;
+    }
+
+    /* Integration cards in matrix mode */
+    html.matrix-mode .integ-card,
+    html.matrix-mode .integ-card-extra {
+      background: rgba(0, 20, 5, 0.70) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+    html.matrix-mode .integ-card span,
+    html.matrix-mode .integ-card-extra span {
+      color: rgba(255,255,255,0.85) !important;
+    }
+    html.matrix-mode .integ-card > div:first-child,
+    html.matrix-mode .integ-card-extra > div:first-child {
+      background: rgba(0, 40, 10, 0.80) !important;
+      border-color: rgba(255,255,255,0.12) !important;
+    }
 
     /* Music control button */
     #music-btn {
       position: fixed;
-      bottom: 24px; right: 24px;
+      bottom: 24px;
+      right: 24px;
       z-index: 9999;
-      width: 42px; height: 42px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      border: 1.5px solid rgba(37,99,235,0.5);
-      background: rgba(37,99,235,0.18);
+      border: 1.5px solid rgba(37, 99, 235, 0.5);
+      background: rgba(37, 99, 235, 0.18);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       color: white;
@@ -528,15 +661,20 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
-      box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
     }
-    #music-btn:hover { background: rgba(37,99,235,0.38); transform: scale(1.10); }
+
+    #music-btn:hover {
+      background: rgba(37, 99, 235, 0.38);
+      transform: scale(1.10);
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- MATRIX: video bg (audio created in JS) -->
+  <!-- MATRIX: audio + video bg -->
+  <audio id="matrix-audio" src="0331.mp3" loop preload="auto"></audio>
   <video id="matrix-video" src="Background.mp4" loop muted playsinline></video>
   <div id="matrix-overlay"></div>
 
@@ -544,16 +682,17 @@
   <button id="music-btn" aria-label="Toggle music" title="Toggle music">
     <!-- Playing icon (music note) -->
     <svg id="music-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M9 18V5l12-2v13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="6" cy="18" r="3" stroke="white" stroke-width="2"/>
-      <circle cx="18" cy="16" r="3" stroke="white" stroke-width="2"/>
+      <path d="M9 18V5l12-2v13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="6" cy="18" r="3" stroke="white" stroke-width="2" />
+      <circle cx="18" cy="16" r="3" stroke="white" stroke-width="2" />
     </svg>
     <!-- Muted icon (note + slash) -->
     <svg id="music-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:none">
-      <path d="M9 18V5l12-2v13" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="6" cy="18" r="3" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
-      <circle cx="18" cy="16" r="3" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
-      <line x1="3" y1="3" x2="21" y2="21" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <path d="M9 18V5l12-2v13" stroke="rgba(255,255,255,0.45)" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+      <circle cx="6" cy="18" r="3" stroke="rgba(255,255,255,0.45)" stroke-width="2" />
+      <circle cx="18" cy="16" r="3" stroke="rgba(255,255,255,0.45)" stroke-width="2" />
+      <line x1="3" y1="3" x2="21" y2="21" stroke="white" stroke-width="2" stroke-linecap="round" />
     </svg>
   </button>
 
@@ -588,7 +727,9 @@
       <!-- Right side -->
       <div class="flex items-center gap-2 ml-auto">
         <!-- Hamburger (mobile only) -->
-        <button id="mob-burger" class="md:hidden flex flex-col justify-center gap-[5px] w-9 h-9 rounded-xl hover:bg-gray-100 transition-colors items-center" onclick="toggleMobileMenu()" aria-label="Menu">
+        <button id="mob-burger"
+          class="md:hidden flex flex-col justify-center gap-[5px] w-9 h-9 rounded-xl hover:bg-gray-100 transition-colors items-center"
+          onclick="toggleMobileMenu()" aria-label="Menu">
           <span class="w-5 h-[2px] bg-zinc-700 rounded block transition-all"></span>
           <span class="w-5 h-[2px] bg-zinc-700 rounded block transition-all"></span>
           <span class="w-4 h-[2px] bg-zinc-700 rounded block transition-all"></span>
@@ -853,11 +994,14 @@
       <!-- What it is — one clear line -->
       <div class="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 mb-6">
         <div class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-        <span class="text-xs font-semibold text-blue-700 tracking-wide" data-i18n="hero_tag">AI Sales Agent · Telegram · Bitrix24</span>
+        <span class="text-xs font-semibold text-blue-700 tracking-wide" data-i18n="hero_tag">AI Sales Agent · Telegram ·
+          Bitrix24</span>
       </div>
-      <h1 style="font-weight:800" class="text-[2.4rem] sm:text-5xl md:text-[68px] tracking-tighter leading-[1.05] text-zinc-900"
+      <h1 style="font-weight:800"
+        class="text-[2.4rem] sm:text-5xl md:text-[68px] tracking-tighter leading-[1.05] text-zinc-900"
         data-i18n-html="hero_h1">Sell more.<br>Wait less.</h1>
-      <p style="font-weight:800" class="text-[2.4rem] sm:text-5xl md:text-[68px] tracking-tighter leading-[1.05] text-zinc-300 mt-1"
+      <p style="font-weight:800"
+        class="text-[2.4rem] sm:text-5xl md:text-[68px] tracking-tighter leading-[1.05] text-zinc-300 mt-1"
         data-i18n="hero_h2">all on autopilot.</p>
       <p class="text-base text-zinc-500 leading-relaxed max-w-[52ch] mx-auto mt-6 mb-8" data-i18n="hero_sub">Strateg AI
         runs your Telegram outreach, qualifies leads in real time, and syncs every deal straight into Bitrix24 — while
@@ -866,7 +1010,9 @@
         <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank"
           class="inline-flex items-center gap-2.5 bg-blue-600 text-white font-semibold px-8 py-4 rounded-full text-base btn"
           data-i18n="hero_cta">Get free demo</a>
-        <a href="#how" class="inline-flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-zinc-800 transition-colors px-4 py-4" data-i18n="hero_see_how">See how it works →</a>
+        <a href="#how"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-zinc-500 hover:text-zinc-800 transition-colors px-4 py-4"
+          data-i18n="hero_see_how">See how it works →</a>
       </div>
     </div>
   </section>
@@ -880,30 +1026,69 @@
         <div class="p-8 bg-gray-50 border-b md:border-b-0 md:border-r border-gray-200">
           <div class="flex items-center gap-2 mb-5">
             <div class="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2L2 8" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 2l6 6M8 2L2 8" stroke="#ef4444" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
             </div>
-            <span class="text-sm font-bold text-zinc-500 uppercase tracking-widest" data-i18n="prob_before">Without Strateg AI</span>
+            <span class="text-sm font-bold text-zinc-500 uppercase tracking-widest" data-i18n="prob_before">Without
+              Strateg AI</span>
           </div>
           <ul class="space-y-3">
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob1">Sales team spends 4+ hours/day manually following up in Telegram</span></li>
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob2">Leads go cold while your team sleeps or is busy</span></li>
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob3">No lead tracking — deals fall through the cracks</span></li>
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob4">CRM (Bitrix24) is always out of date</span></li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob1">Sales team spends 4+ hours/day manually
+                following up in Telegram</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob2">Leads go cold while your team sleeps or
+                is busy</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob3">No lead tracking — deals fall through
+                the cracks</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="prob4">CRM (Bitrix24) is always out of
+                date</span>
+            </li>
           </ul>
         </div>
         <!-- After -->
         <div class="p-8 bg-white">
           <div class="flex items-center gap-2 mb-5">
             <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
             </div>
-            <span class="text-sm font-bold text-blue-600 uppercase tracking-widest" data-i18n="prob_after">With Strateg AI</span>
+            <span class="text-sm font-bold text-blue-600 uppercase tracking-widest" data-i18n="prob_after">With Strateg
+              AI</span>
           </div>
           <ul class="space-y-3">
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol1">AI replies to every lead in under 5 seconds — 24/7, no days off</span></li>
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol2">Qualifies, scores, and follows up with every lead automatically</span></li>
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol3">Every deal tracked — nothing falls through the cracks</span></li>
-            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol4">Bitrix24 updated instantly, automatically, every time</span></li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol1">AI replies to every lead in under 5
+                seconds — 24/7, no days off</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol2">Qualifies, scores, and follows up with
+                every lead automatically</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol3">Every deal tracked — nothing falls
+                through the cracks</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div><span
+                class="text-sm text-zinc-600 leading-relaxed" data-i18n="sol4">Bitrix24 updated instantly,
+                automatically, every time</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -919,7 +1104,8 @@
           <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500" data-i18n="how_badge">How it
             works</span>
         </div>
-        <h2 style="font-weight:800" class="text-3xl md:text-4xl lg:text-5xl tracking-tighter text-zinc-900" data-i18n="how_h2">Up
+        <h2 style="font-weight:800" class="text-3xl md:text-4xl lg:text-5xl tracking-tighter text-zinc-900"
+          data-i18n="how_h2">Up
           and running in 3 steps</h2>
       </div>
 
@@ -937,7 +1123,8 @@
               1</div>
             <div
               class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
-              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step1_title">We connect your
+              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step1_title">We
+                connect your
                 accounts</h4>
               <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step1_desc">We link Strateg AI to your
                 Telegram, Instagram, LinkedIn, Bitrix24, and any other channels you use. No code required from your side
@@ -952,7 +1139,8 @@
               2</div>
             <div
               class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
-              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step2_title">AI learns your
+              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step2_title">AI
+                learns your
                 sales process</h4>
               <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step2_desc">We train the AI on your product,
                 pricing, objections, and tone of voice. It learns to reply exactly how your best sales rep would — in
@@ -967,7 +1155,8 @@
               3</div>
             <div
               class="bg-white rounded-2xl p-5 sm:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex-1 card-hover w-full">
-              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step3_title">Leads flow in. You
+              <h4 style="font-weight:700" class="text-base sm:text-lg text-zinc-900 mb-2" data-i18n="step3_title">Leads
+                flow in. You
                 close deals.</h4>
               <p class="text-sm text-zinc-500 leading-relaxed" data-i18n="step3_desc">The AI handles outreach,
                 follow-ups, content, and qualification around the clock. Qualified leads land in your Bitrix24 pipeline.
@@ -990,7 +1179,8 @@
           <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500"
             data-i18n="features_badge">Features</span>
         </div>
-        <h2 style="font-weight:800" class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08]"
+        <h2 style="font-weight:800"
+          class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08]"
           data-i18n-html="features_h2">Built to close deals,<br>not just send messages.</h2>
       </div>
 
@@ -1094,32 +1284,44 @@
           style="animation-delay:120ms">
           <div class="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center mb-6">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect x="2" y="3" width="18" height="13" rx="2.5" stroke="white" stroke-width="1.4"/>
-              <path d="M6 8h10M6 11h6" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-              <circle cx="17" cy="17" r="3.5" fill="white"/>
-              <path d="M17 15.5v3M15.5 17h3" stroke="#2563eb" stroke-width="1.4" stroke-linecap="round"/>
+              <rect x="2" y="3" width="18" height="13" rx="2.5" stroke="white" stroke-width="1.4" />
+              <path d="M6 8h10M6 11h6" stroke="white" stroke-width="1.4" stroke-linecap="round" />
+              <circle cx="17" cy="17" r="3.5" fill="white" />
+              <path d="M17 15.5v3M15.5 17h3" stroke="#2563eb" stroke-width="1.4" stroke-linecap="round" />
             </svg>
           </div>
-          <h3 style="font-weight:700" class="text-xl text-white mb-2 tracking-tight" data-i18n="feat3_title">SMM posts on autopilot</h3>
-          <p class="text-sm text-blue-200 leading-relaxed mb-6" data-i18n="feat3_desc">AI writes, schedules, and publishes posts to Instagram, Telegram, and LinkedIn — every day, without lifting a finger.</p>
+          <h3 style="font-weight:700" class="text-xl text-white mb-2 tracking-tight" data-i18n="feat3_title">SMM posts
+            on autopilot</h3>
+          <p class="text-sm text-blue-200 leading-relaxed mb-6" data-i18n="feat3_desc">AI writes, schedules, and
+            publishes posts to Instagram, Telegram, and LinkedIn — every day, without lifting a finger.</p>
           <div class="bg-white/10 rounded-2xl p-4 space-y-2.5">
             <div class="flex items-center gap-3">
               <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
-                <svg width="14" height="14" viewBox="0 0 22 22" fill="none"><rect x="2" y="2" width="18" height="18" rx="5.5" stroke="white" stroke-width="1.8"/><circle cx="11" cy="11" r="4" stroke="white" stroke-width="1.8"/><circle cx="16.5" cy="5.5" r="1.4" fill="white"/></svg>
+                <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+                  <rect x="2" y="2" width="18" height="18" rx="5.5" stroke="white" stroke-width="1.8" />
+                  <circle cx="11" cy="11" r="4" stroke="white" stroke-width="1.8" />
+                  <circle cx="16.5" cy="5.5" r="1.4" fill="white" />
+                </svg>
               </div>
               <span class="text-xs text-blue-100 flex-1">Instagram · Today 10:00</span>
               <div class="w-1.5 h-1.5 rounded-full bg-green-300 pulse-live"></div>
             </div>
             <div class="flex items-center gap-3">
               <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 2 2 10l7 3 2 7 3-4 5 4L22 2Z" fill="white"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M22 2 2 10l7 3 2 7 3-4 5 4L22 2Z" fill="white" />
+                </svg>
               </div>
               <span class="text-xs text-blue-100 flex-1">Telegram · Today 14:00</span>
               <span class="text-[10px] text-blue-300 font-semibold">SCHEDULED</span>
             </div>
             <div class="flex items-center gap-3">
               <div class="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="white" fill-opacity=".15" stroke="white" stroke-width="1.6"/><path d="M8 17V10M12 17V7M16 17v-4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="2" width="20" height="20" rx="4" fill="white" fill-opacity=".15" stroke="white"
+                    stroke-width="1.6" />
+                  <path d="M8 17V10M12 17V7M16 17v-4" stroke="white" stroke-width="1.6" stroke-linecap="round" />
+                </svg>
               </div>
               <span class="text-xs text-blue-100 flex-1">LinkedIn · Tomorrow 09:00</span>
               <span class="text-[10px] text-blue-300 font-semibold">QUEUED</span>
@@ -1177,7 +1379,8 @@
 
 
   <!-- INTEGRATIONS -->
-  <section id="integrations" class="py-16 md:py-28 px-4 bg-transparent border-t border-gray-100 overflow-hidden relative">
+  <section id="integrations"
+    class="py-16 md:py-28 px-4 bg-transparent border-t border-gray-100 overflow-hidden relative">
     <div class="max-w-6xl mx-auto">
       <div class="mb-14 text-center reveal relative">
         <!-- PARALLAX IOCKETS -->
@@ -1228,12 +1431,15 @@
         <div
           class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 mb-4 relative z-10">
           <div class="w-1.5 h-1.5 rounded-full bg-blue-600"></div>
-          <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500" data-i18n="integ_badge">Integratsiyalar</span>
+          <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500"
+            data-i18n="integ_badge">Integratsiyalar</span>
         </div>
         <h2 style="font-weight:800"
-          class="text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08] relative z-10" data-i18n-html="integ_h2">50+
+          class="text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08] relative z-10"
+          data-i18n-html="integ_h2">50+
           integratsiya.<br><span class="text-zinc-400">Hamma narsa ulangan.</span></h2>
-        <p class="text-base text-zinc-500 mt-4 max-w-[44ch] mx-auto relative z-10" data-i18n="integ_sub">Strateg AI siz ishlataydigan barcha
+        <p class="text-base text-zinc-500 mt-4 max-w-[44ch] mx-auto relative z-10" data-i18n="integ_sub">Strateg AI siz
+          ishlataydigan barcha
           vositalar bilan muammosiz ishlaydi.</p>
 
         <!-- CLEAN STATIC STATS TIER (90deg sharp borders, black text) -->
@@ -1274,7 +1480,7 @@
             <!-- Bitrix24: B shape -->
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <rect x="2" y="2" width="20" height="20" rx="4" fill="#FF5400" />
-              <path d="M8 7h5.5a2.5 2.5 0 010 5H8zm0 5h6a2.5 2.5 0 010 5H8z" fill="white"/>
+              <path d="M8 7h5.5a2.5 2.5 0 010 5H8zm0 5h6a2.5 2.5 0 010 5H8z" fill="white" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-zinc-700 text-center">Bitrix24</span>
@@ -1317,15 +1523,15 @@
             <!-- Gmail: M envelope -->
             <svg width="24" height="18" viewBox="0 0 24 18" fill="none">
               <!-- Envelope body -->
-              <rect x="0" y="0" width="24" height="18" rx="2" fill="white" stroke="#E0E0E0" stroke-width="0.5"/>
+              <rect x="0" y="0" width="24" height="18" rx="2" fill="white" stroke="#E0E0E0" stroke-width="0.5" />
               <!-- Left green side -->
-              <path d="M0 2L0 18L5 13.5L5 2Z" fill="#34A853"/>
+              <path d="M0 2L0 18L5 13.5L5 2Z" fill="#34A853" />
               <!-- Right yellow side -->
-              <path d="M24 2L24 18L19 13.5L19 2Z" fill="#FBBC05"/>
+              <path d="M24 2L24 18L19 13.5L19 2Z" fill="#FBBC05" />
               <!-- Bottom blue -->
-              <path d="M5 13.5L12 18.5L19 13.5L24 18L0 18Z" fill="#4285F4"/>
+              <path d="M5 13.5L12 18.5L19 13.5L24 18L0 18Z" fill="#4285F4" />
               <!-- Red M fold at top -->
-              <path d="M0 1.5L12 10L24 1.5" fill="none" stroke="#EA4335" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M0 1.5L12 10L24 1.5" fill="none" stroke="#EA4335" stroke-width="2.2" stroke-linejoin="round" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-zinc-700 text-center">Gmail</span>
@@ -1356,11 +1562,12 @@
             <!-- Notion: white page with black N and dog-ear -->
             <svg width="20" height="22" viewBox="0 0 20 22" fill="none">
               <!-- Page body -->
-              <path d="M2 0h11l5 5v17H2z" fill="white" stroke="#D0D0D0" stroke-width="1"/>
+              <path d="M2 0h11l5 5v17H2z" fill="white" stroke="#D0D0D0" stroke-width="1" />
               <!-- Dog-ear fold -->
-              <path d="M13 0l5 5h-5z" fill="#E8E8E8" stroke="#D0D0D0" stroke-width="1"/>
+              <path d="M13 0l5 5h-5z" fill="#E8E8E8" stroke="#D0D0D0" stroke-width="1" />
               <!-- N letter -->
-              <path d="M5.5 6.5v9M14.5 6.5v9M5.5 6.5L14.5 15.5" stroke="#18181b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5.5 6.5v9M14.5 6.5v9M5.5 6.5L14.5 15.5" stroke="#18181b" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-zinc-700 text-center">Notion</span>
@@ -1592,8 +1799,10 @@
           <div class="w-12 h-12 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center">
             <!-- Stripe: white S on purple bg -->
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="2" width="20" height="20" rx="5" fill="#635BFF"/>
-              <path d="M14.5 9.5c0-1.4-1.1-2.5-2.5-2.5h-1C9.7 7 8.5 8 8.5 9.5c0 1.4 1 2 2.5 2.5S14 13.5 14 15c0 1.4-1.2 2.5-2.5 2.5h-1C9.1 17.5 8 16.5 8 15" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+              <rect x="2" y="2" width="20" height="20" rx="5" fill="#635BFF" />
+              <path
+                d="M14.5 9.5c0-1.4-1.1-2.5-2.5-2.5h-1C9.7 7 8.5 8 8.5 9.5c0 1.4 1 2 2.5 2.5S14 13.5 14 15c0 1.4-1.2 2.5-2.5 2.5h-1C9.1 17.5 8 16.5 8 15"
+                stroke="white" stroke-width="1.8" stroke-linecap="round" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-zinc-700 text-center">Stripe</span>
@@ -1606,8 +1815,10 @@
           <div class="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-700 flex items-center justify-center">
             <!-- OpenAI: 6-arm asterisk logo -->
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 2v4M10 14v4M2 10h4M14 10h4M4.1 4.1l2.8 2.8M13.1 13.1l2.8 2.8M15.9 4.1l-2.8 2.8M6.9 13.1l-2.8 2.8" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
-              <circle cx="10" cy="10" r="2.8" stroke="white" stroke-width="1.5"/>
+              <path
+                d="M10 2v4M10 14v4M2 10h4M14 10h4M4.1 4.1l2.8 2.8M13.1 13.1l2.8 2.8M15.9 4.1l-2.8 2.8M6.9 13.1l-2.8 2.8"
+                stroke="white" stroke-width="1.7" stroke-linecap="round" />
+              <circle cx="10" cy="10" r="2.8" stroke="white" stroke-width="1.5" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-zinc-700 text-center">OpenAI</span>
@@ -1943,7 +2154,7 @@
     });
 
     // Interactive 3D Integration Cards Hover Effect (Replaced with Float/Repel)
-    /* 
+    /*
     OLD Logic disabled:
     document.querySelectorAll('.integ-card').forEach(card => {
     ...
@@ -1966,7 +2177,8 @@
           <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500"
             data-i18n="solutions_badge">Solutions</span>
         </div>
-        <h2 style="font-weight:800" class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08]"
+        <h2 style="font-weight:800"
+          class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-zinc-900 leading-[1.08]"
           data-i18n-html="solutions_h2">One AI team.<br>Every channel covered.</h2>
         <p class="text-base text-zinc-500 mt-4 max-w-[48ch]" data-i18n="solutions_sub">From Telegram to TikTok — Strateg
           AI manages your presence, outreach, and content across every platform your customers use.</p>
@@ -2223,7 +2435,8 @@
           <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500"
             data-i18n="pricing_badge">Pricing</span>
         </div>
-        <h2 style="font-weight:800" class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-zinc-900" data-i18n="pricing_h2">
+        <h2 style="font-weight:800" class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-zinc-900"
+          data-i18n="pricing_h2">
           Simple pricing plans</h2>
       </div>
 
@@ -2380,7 +2593,8 @@
   <!-- CTA BANNER -->
   <section class="py-20 px-4 bg-blue-600">
     <div class="max-w-3xl mx-auto text-center reveal">
-      <h2 style="font-weight:800" class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-white mb-4" data-i18n="cta_h2">Ready
+      <h2 style="font-weight:800" class="text-2xl sm:text-4xl md:text-5xl tracking-tighter text-white mb-4"
+        data-i18n="cta_h2">Ready
         to automate your sales?</h2>
       <p class="text-blue-200 text-base mb-8" data-i18n="cta_sub">Book a free 30-minute strategy call. We'll show you
         exactly how Strateg AI works for your business.</p>
@@ -2454,14 +2668,16 @@
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <circle cx="9" cy="9" r="6.5" stroke="#94a3b8" stroke-width="1.3" />
             <path d="M9 6v3l2 2" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round" />
-          </svg></div>
+          </svg>
+        </div>
       </div>
       <div class="absolute bottom-16 left-[16%] float-b">
         <div
           class="w-14 h-14 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center">
           <svg width="22" height="17" viewBox="0 0 22 17" fill="none">
             <path fill-rule="evenodd" d="M21 1 18 16l-6-3.5-3 3-.5-3.5 8-8.5L9 9 2 7 21 1Z" fill="#0EA5E9" />
-          </svg></div>
+          </svg>
+        </div>
       </div>
       <div class="absolute bottom-6 left-[30%] float-c">
         <div
@@ -2470,7 +2686,8 @@
             <rect x="2" y="2" width="14" height="14" rx="4" stroke="#ec4899" stroke-width="1.4" />
             <circle cx="9" cy="9" r="3" stroke="#ec4899" stroke-width="1.4" />
             <circle cx="13.5" cy="4.5" r="1.1" fill="#ec4899" />
-          </svg></div>
+          </svg>
+        </div>
       </div>
       <div class="absolute bottom-14 left-[44%] float-a" style="animation-delay:.8s">
         <div
@@ -2488,14 +2705,16 @@
           class="w-12 h-12 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M1 1l5.5 7.5L1 15h2l4-5.3L11 15h4L9.2 7.2 14.5 1h-2L7.5 5.8 5 1H1Z" fill="#18181b" />
-          </svg></div>
+          </svg>
+        </div>
       </div>
       <div class="absolute bottom-14 left-[74%] float-c" style="animation-delay:.4s">
         <div
           class="w-14 h-14 bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] border border-gray-100 flex items-center justify-center">
           <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
             <path d="M11 1a4 4 0 0 0 4 4v3a7 7 0 0 1-4-1.3V13a5 5 0 1 1-3-4.6V11a2 2 0 1 0 2 2V1h1Z" fill="#18181b" />
-          </svg></div>
+          </svg>
+        </div>
       </div>
       <div class="absolute bottom-6 left-[87%] float-a" style="animation-delay:1.8s">
         <div
@@ -2503,7 +2722,8 @@
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M4 10l4-6 4 3 4-5" stroke="#10b981" stroke-width="1.4" stroke-linecap="round"
               stroke-linejoin="round" />
-          </svg></div>
+          </svg>
+        </div>
       </div>
     </div>
 
@@ -2795,7 +3015,7 @@
       document.getElementById('mobile-menu').classList.remove('open');
     }
     // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const menu = document.getElementById('mobile-menu');
       const burger = document.getElementById('mob-burger');
       if (menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) {
@@ -2827,9 +3047,9 @@
           const rect = el.getBoundingClientRect();
           const parentRect = el.offsetParent.getBoundingClientRect();
 
-          el.style.left   = (rect.left - parentRect.left) + 'px';
-          el.style.top    = (rect.top  - parentRect.top)  + 'px';
-          el.style.right  = 'auto';
+          el.style.left = (rect.left - parentRect.left) + 'px';
+          el.style.top = (rect.top - parentRect.top) + 'px';
+          el.style.right = 'auto';
           el.style.bottom = 'auto';
 
           offsetX = clientX - rect.left;
@@ -2842,7 +3062,7 @@
           if (!dragging) return;
           const parentRect = el.offsetParent.getBoundingClientRect();
           el.style.left = (clientX - parentRect.left - offsetX) + 'px';
-          el.style.top  = (clientY - parentRect.top  - offsetY) + 'px';
+          el.style.top = (clientY - parentRect.top - offsetY) + 'px';
         }
 
         function endDrag() {
@@ -2879,53 +3099,58 @@
     })();
 
     // ===== MATRIX SOUNDTRACK + THEME TRIGGER =====
-    var _bgAudio = new Audio('matrix 0331.mp3');
-    _bgAudio.loop = true;
-    var _matrixDone = false;
-    var _matrixVideo = document.getElementById('matrix-video');
-    var _musicBtn = document.getElementById('music-btn');
-    var _iconOn = document.getElementById('music-icon-on');
-    var _iconOff = document.getElementById('music-icon-off');
+    (function () {
+      const audio = document.getElementById('matrix-audio');
+      const video = document.getElementById('matrix-video');
+      const btn = document.getElementById('music-btn');
+      const iconOn = document.getElementById('music-icon-on');
+      const iconOff = document.getElementById('music-icon-off');
+      let matrixDone = false;
 
-    _bgAudio.addEventListener('timeupdate', function () {
-      if (!_matrixDone && _bgAudio.currentTime >= 24) {
-        _matrixDone = true;
+      function setIconState(playing) {
+        iconOn.style.display = playing ? 'block' : 'none';
+        iconOff.style.display = playing ? 'none' : 'block';
+      }
+
+      function activateMatrix() {
+        if (matrixDone) return;
+        matrixDone = true;
         document.documentElement.classList.add('matrix-mode');
-        _matrixVideo.play().catch(function(){});
+        video.play().catch(function () { });
       }
-    });
 
-    // Auto-play on page load (with user gesture fallback)
-    function _tryAutoPlay() {
-      _bgAudio.play().then(function () {
-        _iconOn.style.display = 'block';
-        _iconOff.style.display = 'none';
-      }).catch(function () {
-        // Autoplay blocked — show muted icon, let user click to start
-        _iconOn.style.display = 'none';
-        _iconOff.style.display = 'block';
+      audio.addEventListener('timeupdate', function () {
+        if (!matrixDone && audio.currentTime >= 25) activateMatrix();
       });
-    }
 
-    // Try immediately on DOM ready, also try on first user interaction as fallback
-    _tryAutoPlay();
-    document.addEventListener('click', function _firstClick() {
-      if (_bgAudio.paused) _tryAutoPlay();
-      document.removeEventListener('click', _firstClick);
-    }, { once: true });
+      btn.addEventListener('click', function () {
+        if (audio.paused) {
+          audio.play().then(function () { setIconState(true); }).catch(function () { });
+        } else {
+          audio.pause();
+          setIconState(false);
+        }
+      });
 
-    _musicBtn.onclick = function () {
-      if (_bgAudio.paused) {
-        _bgAudio.play().then(function () {
-          _iconOn.style.display = 'block';
-          _iconOff.style.display = 'none';
-        });
-      } else {
-        _bgAudio.pause();
-        _iconOn.style.display = 'none';
-        _iconOff.style.display = 'block';
-      }
-    };
+      // Try to play immediately on page load (works on file:// and allowed origins)
+      audio.play().then(function () {
+        setIconState(true);
+      }).catch(function () {
+        // Chrome blocked it — play on very first interaction (scroll/click/key)
+        setIconState(false);
+        function unlock() {
+          audio.play().then(function () {
+            setIconState(true);
+            document.removeEventListener('click', unlock);
+            document.removeEventListener('scroll', unlock);
+            document.removeEventListener('keydown', unlock);
+          }).catch(function(){});
+        }
+        document.addEventListener('click', unlock);
+        document.addEventListener('scroll', unlock);
+        document.addEventListener('keydown', unlock);
+      });
+    })();
   </script>
 </body>
 
