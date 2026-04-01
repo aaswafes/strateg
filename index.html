@@ -3123,8 +3123,20 @@
         if (!matrixDone && audio.currentTime >= 25) activateMatrix();
       });
 
-      btn.addEventListener('click', function () {
+      var unlocked = false;
+
+      function startPlaying() {
+        if (unlocked) return;
+        unlocked = true;
+        audio.play().then(function () {
+          setIconState(true);
+        }).catch(function () { unlocked = false; });
+      }
+
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
         if (audio.paused) {
+          unlocked = true;
           audio.play().then(function () { setIconState(true); }).catch(function () { });
         } else {
           audio.pause();
@@ -3132,23 +3144,16 @@
         }
       });
 
-      // Try to play immediately on page load (works on file:// and allowed origins)
+      // Try immediate autoplay (works if browser allows it)
       audio.play().then(function () {
+        unlocked = true;
         setIconState(true);
       }).catch(function () {
-        // Chrome blocked it — play on very first interaction (scroll/click/key)
         setIconState(false);
-        function unlock() {
-          audio.play().then(function () {
-            setIconState(true);
-            document.removeEventListener('click', unlock);
-            document.removeEventListener('scroll', unlock);
-            document.removeEventListener('keydown', unlock);
-          }).catch(function(){});
-        }
-        document.addEventListener('click', unlock);
-        document.addEventListener('scroll', unlock);
-        document.addEventListener('keydown', unlock);
+        // Fallback: start on first user interaction
+        document.addEventListener('click', startPlaying);
+        document.addEventListener('scroll', startPlaying);
+        document.addEventListener('keydown', startPlaying);
       });
     })();
   </script>
