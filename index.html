@@ -536,8 +536,7 @@
 
 <body>
 
-  <!-- MATRIX: audio + video bg -->
-  <audio id="matrix-audio" src="Matrix.flac" loop preload="auto"></audio>
+  <!-- MATRIX: video bg (audio created in JS) -->
   <video id="matrix-video" src="Background.mp4" loop muted playsinline></video>
   <div id="matrix-overlay"></div>
 
@@ -2880,53 +2879,53 @@
     })();
 
     // ===== MATRIX SOUNDTRACK + THEME TRIGGER =====
-    (function () {
-      const audio = document.getElementById('matrix-audio');
-      const video = document.getElementById('matrix-video');
-      const btn   = document.getElementById('music-btn');
-      const iconOn  = document.getElementById('music-icon-on');
-      const iconOff = document.getElementById('music-icon-off');
-      let matrixDone = false;
+    var _bgAudio = new Audio('matrix 0331.mp3');
+    _bgAudio.loop = true;
+    var _matrixDone = false;
+    var _matrixVideo = document.getElementById('matrix-video');
+    var _musicBtn = document.getElementById('music-btn');
+    var _iconOn = document.getElementById('music-icon-on');
+    var _iconOff = document.getElementById('music-icon-off');
 
-      function setIconState(playing) {
-        iconOn.style.display  = playing ? 'block' : 'none';
-        iconOff.style.display = playing ? 'none'  : 'block';
-      }
-
-      function activateMatrix() {
-        if (matrixDone) return;
-        matrixDone = true;
+    _bgAudio.addEventListener('timeupdate', function () {
+      if (!_matrixDone && _bgAudio.currentTime >= 24) {
+        _matrixDone = true;
         document.documentElement.classList.add('matrix-mode');
-        video.play().catch(function(){});
+        _matrixVideo.play().catch(function(){});
       }
+    });
 
-      audio.addEventListener('timeupdate', function () {
-        if (!matrixDone && audio.currentTime >= 24) activateMatrix();
+    // Auto-play on page load (with user gesture fallback)
+    function _tryAutoPlay() {
+      _bgAudio.play().then(function () {
+        _iconOn.style.display = 'block';
+        _iconOff.style.display = 'none';
+      }).catch(function () {
+        // Autoplay blocked — show muted icon, let user click to start
+        _iconOn.style.display = 'none';
+        _iconOff.style.display = 'block';
       });
+    }
 
-      btn.addEventListener('click', function () {
-        if (audio.paused) {
-          audio.play().then(function(){ setIconState(true); }).catch(function(){});
-        } else {
-          audio.pause();
-          setIconState(false);
-        }
-      });
+    // Try immediately on DOM ready, also try on first user interaction as fallback
+    _tryAutoPlay();
+    document.addEventListener('click', function _firstClick() {
+      if (_bgAudio.paused) _tryAutoPlay();
+      document.removeEventListener('click', _firstClick);
+    }, { once: true });
 
-      function tryAutoplay() {
-        audio.play().then(function () {
-          setIconState(true);
-        }).catch(function () {
-          setIconState(false); // show muted icon — user must click
+    _musicBtn.onclick = function () {
+      if (_bgAudio.paused) {
+        _bgAudio.play().then(function () {
+          _iconOn.style.display = 'block';
+          _iconOff.style.display = 'none';
         });
-      }
-
-      if (document.readyState === 'complete') {
-        tryAutoplay();
       } else {
-        window.addEventListener('load', tryAutoplay);
+        _bgAudio.pause();
+        _iconOn.style.display = 'none';
+        _iconOff.style.display = 'block';
       }
-    })();
+    };
   </script>
 </body>
 
