@@ -364,8 +364,8 @@
     }
 
     .snap-container{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
-    .snap-section{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;}
-    .snap-last{height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;overflow:hidden;}
+    .snap-section{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;display:flex;flex-direction:column;}
+    .snap-last{height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;overflow:hidden;display:flex;flex-direction:column;}
   </style>
 </head>
 
@@ -685,48 +685,36 @@
 
 
   </div><div class="snap-section"><!-- VIDEOS SECTION -->
-  <section id="videos" class="pt-20 pb-6 md:py-24 px-4 dot-grid">
-    <div class="max-w-6xl mx-auto">
-      <div class="mb-5 md:mb-12 text-center reveal">
-        <h2 style="font-weight:800" class="text-3xl md:text-4xl tracking-tighter text-zinc-900" data-i18n="video_h2">
+  <section id="videos" class="h-full flex flex-col pt-20 pb-4 md:py-24 px-4 dot-grid">
+    <div class="max-w-6xl mx-auto w-full flex flex-col flex-1">
+      <div class="mb-4 md:mb-12 text-center reveal">
+        <h2 style="font-weight:800" class="text-2xl md:text-4xl tracking-tighter text-zinc-900" data-i18n="video_h2">
           Strateg AIni harakatda ko'ring</h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 flex-1">
 
         <!-- Video Placeholder 1 -->
         <div
-          class="relative w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-zinc-800 flex items-center justify-center group cursor-pointer reveal">
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 opacity-40 group-hover:opacity-80 transition-opacity duration-500">
-          </div>
+          class="relative w-full bg-zinc-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-zinc-800 flex items-center justify-center group cursor-pointer reveal min-h-[160px]">
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 opacity-40 group-hover:opacity-80 transition-opacity duration-500"></div>
           <div class="relative z-10 flex flex-col items-center gap-3">
-            <div
-              class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="white" class="ml-1">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+            <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white" class="ml-1"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <span class="text-sm font-semibold text-white/70 tracking-wide" data-i18n="video_1_title">Video 1:
-              Platformaga umumiy nazar</span>
+            <span class="text-sm font-semibold text-white/70 tracking-wide" data-i18n="video_1_title">Video 1: Platformaga umumiy nazar</span>
           </div>
         </div>
 
         <!-- Video Placeholder 2 -->
         <div
-          class="relative w-full aspect-video bg-zinc-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-zinc-800 flex items-center justify-center group cursor-pointer reveal"
+          class="relative w-full bg-zinc-900 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-zinc-800 flex items-center justify-center group cursor-pointer reveal min-h-[160px]"
           style="animation-delay:100ms">
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-sky-600/20 opacity-40 group-hover:opacity-80 transition-opacity duration-500">
-          </div>
+          <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-sky-600/20 opacity-40 group-hover:opacity-80 transition-opacity duration-500"></div>
           <div class="relative z-10 flex flex-col items-center gap-3">
-            <div
-              class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="white" class="ml-1">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+            <div class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-white/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white" class="ml-1"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <span class="text-sm font-semibold text-white/70 tracking-wide" data-i18n="video_2_title">Video 2: Bitrix24
-              Integratsiyasi</span>
+            <span class="text-sm font-semibold text-white/70 tracking-wide" data-i18n="video_2_title">Video 2: Bitrix24 Integratsiyasi</span>
           </div>
         </div>
 
@@ -736,16 +724,16 @@
 
 
   </div><div class="snap-section"><!-- TESTIMONIALS -->
-  <section class="pt-20 pb-6 md:py-24 px-4 bg-gray-50">
-    <div class="max-w-6xl mx-auto">
-      <div class="mb-5 md:mb-12 reveal">
+  <section class="h-full flex flex-col pt-20 pb-4 md:py-24 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto w-full flex flex-col flex-1">
+      <div class="mb-4 md:mb-12 reveal">
         <h2 style="font-weight:800" class="text-2xl md:text-4xl tracking-tighter text-zinc-900" data-i18n="testi_h2">
           What our clients say</h2>
       </div>
       <!-- Mobile: horizontal swipe carousel | Desktop: 3-column grid -->
-      <div class="flex md:grid md:grid-cols-3 gap-3 md:gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x snap-mandatory md:snap-none" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+      <div class="flex flex-nowrap md:grid md:grid-cols-3 gap-3 md:gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 snap-x snap-mandatory md:snap-none flex-1" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
 
-        <div class="card-hover bg-white rounded-2xl p-4 md:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] reveal shrink-0 w-[82vw] md:w-auto snap-start">
+        <div class="card-hover bg-white rounded-2xl p-4 md:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] reveal shrink-0 w-[82vw] md:w-auto snap-start flex flex-col">
           <div class="flex gap-1 mb-3">
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg>
@@ -763,7 +751,7 @@
           </div>
         </div>
 
-        <div class="card-hover bg-white rounded-2xl p-4 md:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] reveal shrink-0 w-[82vw] md:w-auto snap-start" style="animation-delay:100ms">
+        <div class="card-hover bg-white rounded-2xl p-4 md:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] reveal shrink-0 w-[82vw] md:w-auto snap-start flex flex-col" style="animation-delay:100ms">
           <div class="flex gap-1 mb-3">
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg>
@@ -781,7 +769,7 @@
           </div>
         </div>
 
-        <div class="card-hover bg-white rounded-2xl p-4 md:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] reveal shrink-0 w-[82vw] md:w-auto snap-start" style="animation-delay:200ms">
+        <div class="card-hover bg-white rounded-2xl p-4 md:p-7 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)] reveal shrink-0 w-[82vw] md:w-auto snap-start flex flex-col" style="animation-delay:200ms">
           <div class="flex gap-1 mb-3">
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg>
@@ -807,9 +795,9 @@
 
 
   </div><div class="snap-last"><!-- PRICING -->
-  <section id="pricing" class="pt-20 pb-3 md:py-28 px-4 bg-white">
+  <section id="pricing" class="flex-1 pt-16 pb-3 md:py-28 px-4 bg-white flex flex-col justify-center">
     <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-4 md:mb-16 reveal">
+      <div class="text-center mb-3 md:mb-16 reveal">
         <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 mb-2 md:mb-4">
           <span class="text-[11px] uppercase tracking-widest font-semibold text-zinc-500"
             data-i18n="pricing_badge">Pricing</span>
