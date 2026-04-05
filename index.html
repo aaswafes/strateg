@@ -1412,26 +1412,88 @@
     // Init with UZ
     document.addEventListener('DOMContentLoaded', () => { setLang('uz'); });
 
-    // ============ CHAT WIDGET ============
+    // ============ CHAT WIDGET — HORMOZI STATE MACHINE ============
     (function () {
       const TELEGRAM = 'https://t.me/aziz_nizom_shaxsiy';
       let isTyping = false;
-      let msgCount = 0;
       let chatStarted = false;
 
-      const GREETING = "Assalomu alaykum! 👋 Mening ismim Humoyun, xizmatlarimizni Strateg AI misolida ko'rsataman 🙂\n\nSizga qanday murojaat qilsam bo'ladi?";
+      // ── Conversation state ──
+      let state = 'greeting'; // greeting → name → discovery → amplify → solution → offer → close
+      let leadName = '';
+      let leadBusiness = '';
 
-      const responses = {
-        name:      function(n){ return 'Juda yaxshi, ' + n + '! 🤝 Sizga qanday yordam bera olaman? Bizning AI xizmatlari haqida bilib olishni xohlaysizmi?'; },
-        price:     "Uch tarif bor:\n\n💼 **Starter** — $29/oy (500 suhbat, 1 kanal)\n🚀 **Pro** — $79/oy (3 000 suhbat, 3 kanal + SMM)\n🏢 **Enterprise** — $199/oy (cheksiz, barcha kanallar)\n\nKo'pchilik Pro dan boshlaydi. Jamoangiz necha kishi?",
-        speed:     "4 soniya ⚡\n\nRaqobatchilaringiz 2+ soat javob kutishadi — o'sha paytda leadlarning 80% ketib bo'lgan. Biz Toshkentdagi 300+ biznesda o'lchadik.",
-        telegram:  "Telegram AI — eng mashhur xizmatimiz 📱\n\nTelethon orqali shaxsiy akkauntdan ishlaydi: leadlarni kvalifikatsiya qiladi, savollarga javob beradi, kalendarga yozadi, Bitrix24 ga yuboradi.\n\nSizga Telegramdan kuniga nechta lead keladi?",
-        instagram: "Instagram AI postlar, stories va DM larga avtomatik javob beradi — sizning brend ovozingizda 📸\n\nMijozlar oyiga 40+ soat tejaydi va izchillik 2 baravarga oshadi. Hozir Instagramni qo'lda boshqaryapsizmi?",
-        results:   "Real natijalar 📊\n\n• Baraka Textile: +38% yopish\n• Samarkand Tech: 1 oyda 14 ta demo\n• Unison Group: 2 oyda 300 lead\n• AutoPark: javob 6 soat → 3 daqiqa\n\nSiz uchun qaysi ko'rsatkich muhimroq?",
-        demo:      "Bepul demo — 30 daqiqa 🎯\n\nSizning Telegram yoki Instagramingizga jonli AI ulaymiz, real suhbatlarni ko'rasiz. Hech qanday bosim yo'q.\n\nQachon qulay?",
-        default:   "Tushundim! 😊 Strateg AI sizning biznesingizga qo'lda lead ishlashni avtomatlashtiradi — 4 soniyada javob beruvchi, 24/7 ishlovchi AI bilan.\n\nQaysi yo'nalish sizga qiziq: Telegram, Instagram yoki narxlar?"
-      };
+      // ── Objection detection ──
+      function detectObjection(m) {
+        if (/qimmat|arzon|narx|dollar|pul|budget|byudjet|\$|to'la|cost|expensive/.test(m)) return 'price_obj';
+        if (/o'ylab|keyin|vaqt yo'q|band|later|keyinroq|aniq emas|bilmay/.test(m)) return 'think_obj';
+        if (/ishonmayman|ishonch|kafolat|guarantee|natija bo'lsa|shart emas|kerak emas/.test(m)) return 'trust_obj';
+        if (/raqib|boshqa|competitor|alternative|bor allaqachon/.test(m)) return 'competitor_obj';
+        return null;
+      }
 
+      // ── Objection responses ──
+      function objectionReply(type) {
+        const n = leadName || 'do\'stim';
+        if (type === 'price_obj') return n + ', tushunaman 🤝\n\nAmmo hozirgi holat sizga har oy nechta yo\'qotilgan lead? Har biri o\'rtacha qancha?\n\nStareg AI narxi — aslida tejash. Birinchi 30 kun ichida natija ko\'rmasangiz, pulni to\'liq qaytaramiz 💯';
+        if (type === 'think_obj') return 'Nimani o\'ylash kerak — hozir ayta olasizmi? Asosiy savol bo\'lsa, javob beraman 😊\n\nAgar vaqt bo\'lmasa — 5 daqiqa Telegram\'da gaplashaylik, hammasi aniq bo\'ladi.';
+        if (type === 'trust_obj') return 'To\'liq tushunaman! Ishonch kerak — bu to\'g\'ri 💪\n\nBaraka Textile 38% ko\'proq bitim yopdi. AutoPark javob vaqtini 6 soatdan 3 daqiqaga tushirdi.\n\nBepul 30 daqiqa demo — o\'z ko\'zingiz bilan ko\'ring, xavf yo\'q.';
+        if (type === 'competitor_obj') return 'Yaxshi savol! Farq shunda: biz faqat bot emas — to\'liq savdo jarayonini avtomatlashtiring: lead → kvalifikatsiya → CRM → follow-up.\n\nQaysi xizmat bilan solishtiryapsiz? Aniq farqni aytib beraman.';
+        return null;
+      }
+
+      // ── Stage responses ──
+      function stageReply(userMsg) {
+        const m = userMsg.toLowerCase();
+        const n = leadName || 'do\'stim';
+
+        // Objection first, regardless of stage
+        const obj = detectObjection(m);
+        if (obj) return objectionReply(obj);
+
+        switch (state) {
+
+          case 'greeting':
+            // Extract name from reply
+            leadName = extractName(userMsg) || userMsg.trim().split(' ')[0];
+            leadName = leadName.charAt(0).toUpperCase() + leadName.slice(1);
+            state = 'discovery';
+            return leadName + ', yaxshi tanishdik! 🤝\n\nQaysi sohadagi biznesda ishlaysiz va mijozlaringiz ko\'proq qaysi kanaldan — Telegram, Instagram yoki boshqa joydan kelyapti?';
+
+          case 'discovery':
+            leadBusiness = userMsg.trim();
+            state = 'amplify';
+            return 'Tushundim! ' + n + ' 👍\n\nHozir yangi so\'rov kelganda — javob berishga o\'rtacha qancha vaqt ketadi? Va bu jarayon qo\'lda bajarilyadimi?';
+
+          case 'amplify':
+            state = 'solution';
+            return 'Ha, aynan shu muammo... 🎯\n\nToshkentdagi tadqiqotimizga ko\'ra: 5 daqiqadan keyin javob berish — konversiyani 80% kamaytiradi. Raqobatchilaringiz ham shu muammoda.\n\nAmmo agar sizning biznesingiz 4 soniyada javob bersa — nima o\'zgaradi?';
+
+          case 'solution':
+            state = 'offer';
+            return 'Aynan shu uchun Strateg AI yaratilgan ✅\n\n• Telegram/Instagram DM larga 4 soniyada javob\n• Leadlarni avtomatik kvalifikatsiya qiladi\n• Hamma narsani Bitrix24 ga yuboradi\n• 24/7 — dam olish, kasallik yo\'q\n\n' + n + ', sizning biznesingizga qancha lead kuniga keladi taxminan?';
+
+          case 'offer':
+            state = 'close';
+            return '💼 **Starter** — $29/oy (500 suhbat, 1 kanal)\n🚀 **Pro** — $79/oy (3 000 suhbat, 3 kanal + SMM) ← Ko\'pchilik shu\n🏢 **Enterprise** — $199/oy (cheksiz, barcha kanallar)\n\n**Kafolat:** 30 kun ichida natija bo\'lmasa — to\'liq qaytaramiz.\n\nBepul 30 daqiqa demo qilib ko\'rmoqchimisiz?';
+
+          case 'close':
+          default:
+            // They're engaging after the offer — push to Telegram
+            showCTA();
+            return n + ', juda yaxshi! 🙌\n\nTelegramda 30 daqiqa jonli demo — AI sizning akkauntingizda real suhbat olib boradi, o\'z ko\'zingiz bilan ko\'rasiz.\n\nQachon qulay — bugun yoki ertaga?';
+        }
+      }
+
+      function extractName(msg) {
+        const match = msg.match(/ismim\s+(\S+)/i) || msg.match(/men\s+(\S+)/i) || msg.match(/mening ismim\s+(\S+)/i);
+        if (match) return match[1];
+        const words = msg.trim().split(/\s+/);
+        if (words.length <= 3) return words[0];
+        return null;
+      }
+
+      // ── DOM helpers ──
       function nowTime() {
         const d = new Date();
         return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
@@ -1456,9 +1518,7 @@
         wrap.className = 'cmsg ' + who;
         const bubble = document.createElement('div');
         bubble.className = 'cbubble';
-        bubble.innerHTML = text
-          .replace(/\n/g, '<br>')
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        bubble.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         wrap.appendChild(bubble);
         const time = document.createElement('div');
         time.className = 'cmsg-time';
@@ -1466,7 +1526,6 @@
         wrap.appendChild(time);
         b.appendChild(wrap);
         scrollBottom();
-        msgCount++;
       }
 
       function showTyping() {
@@ -1496,8 +1555,7 @@
           addMsg(text, 'ai');
           isTyping = false;
           document.getElementById('chatSend').disabled = false;
-          if (msgCount >= 5) showCTA();
-        }, delay || 1800);
+        }, delay || 1600);
       }
 
       function showCTA() {
@@ -1506,7 +1564,7 @@
         const wrap = document.createElement('div');
         wrap.id = 'chatCTA';
         wrap.className = 'ch-cta-bubble';
-        wrap.innerHTML = '<p>Strateg AI ni <strong>o\'z biznesingizda</strong> ko\'rmoqchimisiz? Bepul jonli demo — 24 soat ichida!</p>';
+        wrap.innerHTML = '<p>Strateg AI ni <strong>o\'z biznesingizda</strong> ko\'rmoqchimisiz?<br>Bepul jonli demo — 30 daqiqa, hech qanday majburiyat yo\'q 🎯</p>';
         const btn = document.createElement('a');
         btn.href = TELEGRAM;
         btn.target = '_blank';
@@ -1517,27 +1575,7 @@
         scrollBottom();
       }
 
-      function classify(msg) {
-        const m = msg.toLowerCase();
-        if (/ismim|mening|меня зовут|my name|men\s+\w+man/.test(m)) return 'name_reply';
-        if (/narx|price|pricing|cost|цена|стоим|\$|29|79|199|plan/.test(m)) return 'price';
-        if (/tez|4 son|speed|fast|sekund|быстро|скорост/.test(m)) return 'speed';
-        if (/telegram|tg|telethon/.test(m)) return 'telegram';
-        if (/instagram|ig|insta/.test(m)) return 'instagram';
-        if (/natija|result|кейс|case|mijoz|клиент|итог/.test(m)) return 'results';
-        if (/demo|sinov|trial|попробо/.test(m)) return 'demo';
-        return 'default';
-      }
-
-      function extractName(msg) {
-        // Try to pull out a name from patterns like "mening ismim Bobur" or just a short single word
-        const match = msg.match(/ismim\s+(\S+)/i) || msg.match(/my name is\s+(\S+)/i) || msg.match(/меня зовут\s+(\S+)/i);
-        if (match) return match[1];
-        const words = msg.trim().split(/\s+/);
-        if (words.length <= 2) return words[words.length - 1];
-        return null;
-      }
-
+      // ── Public API ──
       window.openChat = function () {
         document.getElementById('chatPanel').classList.add('open');
         document.getElementById('chatBtn').classList.add('hidden');
@@ -1549,7 +1587,7 @@
             showTyping();
             setTimeout(function () {
               removeTyping();
-              addMsg(GREETING, 'ai');
+              addMsg("Assalomu alaykum! 👋 Mening ismim Humoyun, Strateg AI savdo mutaxassisiman.\n\nXizmatlarimizni Strateg AI misolida ko'rsataman 🙂\n\nSizga qanday murojaat qilsam bo'ladi?", 'ai');
             }, 1400);
           }, 350);
         }
@@ -1567,13 +1605,12 @@
         if (!msg) return;
         input.value = '';
         addMsg(msg, 'user');
-        const key = classify(msg);
-        const delay = 1200 + Math.random() * 900;
-        if (key === 'name_reply') {
-          const name = extractName(msg);
-          aiReply(responses.name(name || msg.split(' ')[0]), delay);
-        } else {
-          aiReply(responses[key] || responses.default, delay);
+        const reply = stageReply(msg);
+        const delay = 1200 + Math.random() * 800;
+        aiReply(reply, delay);
+        // Show CTA after offer stage
+        if (state === 'close') {
+          setTimeout(showCTA, delay + 2000);
         }
       };
     })();
