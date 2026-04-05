@@ -437,6 +437,46 @@
     .snap-container{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
     .snap-section{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;display:flex;flex-direction:column;}
     .snap-last{height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;overflow:hidden;display:flex;flex-direction:column;}
+
+    /* ============ CHAT WIDGET ============ */
+    #chatWidget{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+    #chatBtn{display:flex;align-items:center;gap:8px;background:#2563eb;color:white;border:none;cursor:pointer;padding:12px 20px;border-radius:9999px;box-shadow:0 8px 32px -4px rgba(37,99,235,.55);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,opacity .2s;}
+    #chatBtn:hover{transform:translateY(-3px);box-shadow:0 16px 40px -8px rgba(37,99,235,.65);}
+    #chatBtn.hidden{opacity:0;pointer-events:none;transform:translateY(8px);}
+    #chatPanel{width:340px;background:white;border-radius:20px;box-shadow:0 24px 64px -12px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.06);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(16px) scale(.96);pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1);max-height:500px;}
+    #chatPanel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+    .ch-header{background:#2563eb;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+    .ch-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .ch-info{flex:1;}
+    .ch-name{color:white;font-weight:700;font-size:14px;line-height:1.2;}
+    .ch-status{display:flex;align-items:center;gap:5px;margin-top:2px;}
+    .ch-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-live 2s ease-in-out infinite;flex-shrink:0;}
+    .ch-sub{color:rgba(255,255,255,.75);font-size:11px;font-weight:500;}
+    .ch-close{background:rgba(255,255,255,.15);border:none;cursor:pointer;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
+    .ch-close:hover{background:rgba(255,255,255,.28);}
+    .ch-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;min-height:200px;max-height:280px;scroll-behavior:smooth;}
+    .ch-body::-webkit-scrollbar{width:0;}
+    .cmsg{display:flex;gap:7px;max-width:88%;}
+    .cmsg.ai{align-self:flex-start;}
+    .cmsg.user{align-self:flex-end;flex-direction:row-reverse;}
+    .cbubble{padding:9px 13px;border-radius:16px;font-size:12.5px;line-height:1.55;font-weight:500;}
+    .cmsg.ai .cbubble{background:#f1f5f9;color:#18181b;border-bottom-left-radius:4px;}
+    .cmsg.user .cbubble{background:#2563eb;color:white;border-bottom-right-radius:4px;}
+    .ctyping{padding:10px 13px;display:flex;gap:4px;align-items:center;background:#f1f5f9;border-radius:16px;border-bottom-left-radius:4px;}
+    .ctyping span{width:6px;height:6px;border-radius:50%;background:#94a3b8;display:inline-block;}
+    .ctyping span:nth-child(1){animation:bounce-dot 1.2s ease-in-out infinite 0ms;}
+    .ctyping span:nth-child(2){animation:bounce-dot 1.2s ease-in-out infinite 160ms;}
+    .ctyping span:nth-child(3){animation:bounce-dot 1.2s ease-in-out infinite 320ms;}
+    .ch-quick{padding:8px 10px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #f1f5f9;flex-shrink:0;}
+    .cq-btn{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:9999px;padding:5px 11px;font-size:11px;font-weight:600;cursor:pointer;transition:background .18s,transform .15s;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;}
+    .cq-btn:hover{background:#dbeafe;transform:translateY(-1px);}
+    .ch-foot{padding:10px 12px;border-top:1px solid #f1f5f9;display:flex;gap:8px;align-items:center;flex-shrink:0;}
+    #chatInput{flex:1;border:1px solid #e5e7eb;border-radius:9999px;padding:8px 14px;font-size:12.5px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;font-weight:500;}
+    #chatInput:focus{border-color:#2563eb;}
+    #chatSend{width:34px;height:34px;border-radius:50%;background:#2563eb;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;flex-shrink:0;}
+    #chatSend:hover{background:#1d4ed8;transform:scale(1.08);}
+    #chatSend:disabled{background:#e5e7eb;cursor:not-allowed;transform:none;}
+    @media(max-width:480px){#chatPanel{width:calc(100vw - 32px);}#chatWidget{right:16px;bottom:16px;}}
   </style>
 </head>
 
@@ -797,15 +837,15 @@
         <!-- SLOT 1 -->
         <div class="relative testi-slot flex-1" style="transition-delay:0ms">
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 0s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi1_text">Before Strateg AI our sales team spent <span class="testi-highlight">4 hours a day</span> following up in Telegram. Now automated — close rate jumped <span class="testi-highlight">38%</span> in 6 weeks.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi1_text">Before Strateg AI our sales team spent <span class="testi-highlight">4 hours a day</span> following up in Telegram. Now automated — close rate jumped <span class="testi-highlight">38%</span> in 6 weeks.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">BT</div><div><div class="text-[10px] font-semibold text-zinc-800">Bekzod Tursunov</div><div class="text-[9px] text-zinc-400" data-i18n="testi1_role">CEO, Baraka Textile</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 5s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi4_text"><span class="testi-highlight">300+ inbound leads</span> were automatically qualified in <span class="testi-highlight">2 months</span>. Our team now only talks to serious buyers.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi4_text"><span class="testi-highlight">300+ inbound leads</span> were automatically qualified in <span class="testi-highlight">2 months</span>. Our team now only talks to serious buyers.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">DY</div><div><div class="text-[10px] font-semibold text-zinc-800">Dilnoza Yusupova</div><div class="text-[9px] text-zinc-400" data-i18n="testi4_role">Director, Unison Group</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 10s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi7_text">CRM was chaos before. Now <span class="testi-highlight">every lead</span> gets the right follow-up automatically — pipeline is clean and deals are moving.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi7_text">CRM was chaos before. Now <span class="testi-highlight">every lead</span> gets the right follow-up automatically — pipeline is clean and deals are moving.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-slate-400 to-slate-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">NT</div><div><div class="text-[10px] font-semibold text-zinc-800">Nodir Toshmatov</div><div class="text-[9px] text-zinc-400" data-i18n="testi7_role">CEO, BuildPro</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
         </div>
@@ -813,15 +853,15 @@
         <!-- SLOT 2 -->
         <div class="relative testi-slot flex-1" style="transition-delay:80ms">
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 0s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi2_text">The LinkedIn outreach alone brought <span class="testi-highlight">14 qualified enterprise demos</span> in the first month. Strateg AI made it effortless.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi2_text">The LinkedIn outreach alone brought <span class="testi-highlight">14 qualified enterprise demos</span> in the first month. Strateg AI made it effortless.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">ZR</div><div><div class="text-[10px] font-semibold text-zinc-800">Zulfiya Rashidova</div><div class="text-[9px] text-zinc-400" data-i18n="testi2_role">Head of Sales, Samarkand Tech</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 5s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi5_text">Response time dropped <span class="testi-highlight">6 hours → 3 minutes</span>. Satisfaction score jumped from <span class="testi-highlight">4.2 to 4.9</span> in one quarter.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi5_text">Response time dropped <span class="testi-highlight">6 hours → 3 minutes</span>. Satisfaction score jumped from <span class="testi-highlight">4.2 to 4.9</span> in one quarter.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">JK</div><div><div class="text-[10px] font-semibold text-zinc-800">Jasur Komilov</div><div class="text-[9px] text-zinc-400" data-i18n="testi5_role">CMO, AutoPark Uzbekistan</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 10s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi8_text">Telegram channel grew from <span class="testi-highlight">2K → 18K subscribers</span> in 4 months with Strateg AI content automation. No extra headcount.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi8_text">Telegram channel grew from <span class="testi-highlight">2K → 18K subscribers</span> in 4 months with Strateg AI content automation. No extra headcount.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">KE</div><div><div class="text-[10px] font-semibold text-zinc-800">Kamola Ergasheva</div><div class="text-[9px] text-zinc-400" data-i18n="testi8_role">Head of Growth, EdTech.uz</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
         </div>
@@ -829,15 +869,15 @@
         <!-- SLOT 3 -->
         <div class="relative testi-slot flex-1" style="transition-delay:160ms">
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 0s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi3_text">Bizning Instagram va Telegram kanalimiz uchun kontentni Strateg AI yozadi. Har oy <span class="testi-highlight">40+ soat</span> tejayapmiz va izchillik <span class="testi-highlight">ikki baravarga oshdi</span>.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi3_text">Bizning Instagram va Telegram kanalimiz uchun kontentni Strateg AI yozadi. Har oy <span class="testi-highlight">40+ soat</span> tejayapmiz va izchillik <span class="testi-highlight">ikki baravarga oshdi</span>.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">FA</div><div><div class="text-[10px] font-semibold text-zinc-800">Farrux Alimov</div><div class="text-[9px] text-zinc-400" data-i18n="testi3_role">Founder, FoodTech Tashkent</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 5s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi6_text">Birinchi oyda <span class="testi-highlight">18 ta yangi mijoz</span> oldim. AI to'g'ri lidlarga uladi va ular o'zlari yopildi.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi6_text">Birinchi oyda <span class="testi-highlight">18 ta yangi mijoz</span> oldim. AI to'g'ri lidlarga uladi va ular o'zlari yopildi.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">SM</div><div><div class="text-[10px] font-semibold text-zinc-800">Shaxlo Mirzayeva</div><div class="text-[9px] text-zinc-400" data-i18n="testi6_role">Founder, Beauty Space</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 10s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5" data-i18n="testi9_text">Bot suhbatlari sifati shunday yuqori ediki, mijozlar <span class="testi-highlight">real menejer</span> bilan gaplashayotganini o'yladilar.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3" data-i18n="testi9_text">Bot suhbatlari sifati shunday yuqori ediki, mijozlar <span class="testi-highlight">real menejer</span> bilan gaplashayotganini o'yladilar.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">BN</div><div><div class="text-[10px] font-semibold text-zinc-800">Behruz Nazarov</div><div class="text-[9px] text-zinc-400" data-i18n="testi9_role">COO, LogiTrans</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
         </div>
@@ -845,15 +885,15 @@
         <!-- SLOT 4 -->
         <div class="relative testi-slot flex-1" style="transition-delay:240ms">
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 0s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5">Sales funnel to'liq avtomatlashdi — birinchi haftada 12 ta yangi deal kirdi. Biz hayron qoldik.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3">Sales funnel to'liq avtomatlashdi — birinchi haftada 12 ta yangi deal kirdi. Biz hayron qoldik.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">AK</div><div><div class="text-[10px] font-semibold text-zinc-800">Akbar Karimov</div><div class="text-[9px] text-zinc-400">CEO, Karimov Group</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 5s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5">Mijozlarga javob berish vaqti 24 soatdan 8 daqiqaga tushdi. Raqobatchilardan ancha oldindamiz endi.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3">Mijozlarga javob berish vaqti 24 soatdan 8 daqiqaga tushdi. Raqobatchilardan ancha oldindamiz endi.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">MN</div><div><div class="text-[10px] font-semibold text-zinc-800">Malika Nazarova</div><div class="text-[9px] text-zinc-400">Direktor, Nova Clinic</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
           <div class="absolute inset-0 testi-card-inner rounded-lg p-1.5 flex flex-col justify-between" style="opacity:0;animation:testi-cycle 15s infinite 10s;">
-            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-sm leading-relaxed text-zinc-600 -mt-0.5">Oylik daromad 2 oyda 47% oshdi. Strateg AI investitsiyaning eng tez qaytgan vositasi bo'ldi.</p></div>
+            <div><span class="quote-glyph" style="font-size:1.6rem">"</span><p class="text-xs leading-relaxed text-zinc-600 -mt-0.5 line-clamp-3">Oylik daromad 2 oyda 47% oshdi. Strateg AI investitsiyaning eng tez qaytgan vositasi bo'ldi.</p></div>
             <div class="flex items-center justify-between"><div class="flex items-center gap-1.5"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-lime-400 to-lime-600 flex items-center justify-center text-[8px] font-bold text-white shrink-0">RS</div><div><div class="text-[10px] font-semibold text-zinc-800">Rustam Sobirov</div><div class="text-[9px] text-zinc-400">Founder, RS Trading</div></div></div><div class="flex gap-0.5 shrink-0"><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg><svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4h4L9 7.5l1.5 4L7 9l-3.5 2.5L5 7.5 1.5 5h4L7 1Z" fill="#f59e0b"/></svg></div></div>
           </div>
         </div>
@@ -1063,6 +1103,44 @@
   </div>
   </div></div>
 
+
+  <!-- CHAT WIDGET -->
+  <div id="chatWidget">
+    <div id="chatPanel">
+      <div class="ch-header">
+        <div class="ch-avatar">
+          <svg width="18" height="18" viewBox="0 0 15 15" fill="none">
+            <circle cx="4.5" cy="4.5" r="2.5" fill="#93c5fd" opacity=".8"/>
+            <circle cx="10.5" cy="4.5" r="2.5" fill="white"/>
+            <circle cx="4.5" cy="10.5" r="2.5" fill="white"/>
+            <circle cx="10.5" cy="10.5" r="2.5" fill="#93c5fd" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="ch-info">
+          <div class="ch-name">Strateg AI</div>
+          <div class="ch-status">
+            <div class="ch-dot"></div>
+            <span class="ch-sub" id="chSub">AI Sales Agent · Online</span>
+          </div>
+        </div>
+        <button class="ch-close" onclick="closeChat()" aria-label="Close">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 1l9 9M10 1L1 10"/></svg>
+        </button>
+      </div>
+      <div class="ch-body" id="chBody"></div>
+      <div class="ch-quick" id="chQuick"></div>
+      <div class="ch-foot">
+        <input id="chatInput" type="text" maxlength="200" onkeydown="if(event.key==='Enter')sendChat()" />
+        <button id="chatSend" onclick="sendChat()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+    <button id="chatBtn" onclick="openChat()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span id="chBtnLabel">Try AI Demo</span>
+    </button>
+  </div>
 
   <script>
     // ============ TRANSLATIONS ============
@@ -1310,6 +1388,245 @@
 
     // Init with UZ
     document.addEventListener('DOMContentLoaded', () => { setLang('uz'); });
+
+    // ============ CHAT WIDGET ============
+    (function () {
+      const TELEGRAM = 'https://t.me/aziz_nizom_shaxsiy';
+      let chatOpen = false;
+      let isTyping = false;
+      let msgCount = 0;
+      let chatStarted = false;
+
+      const i18nChat = {
+        en: {
+          btnLabel: 'Try AI Demo',
+          headerSub: 'AI Sales Agent · Online',
+          placeholder: 'Type a message…',
+          greeting: "Hey! 👋 I'm the Strateg AI sales agent. I reply in under 4 seconds, 24/7 — just like I'll do for your business. Ask me anything about pricing, how it works, or what results clients are getting.",
+          quick: ['💰 Pricing', '⚡ How fast?', '📱 Telegram AI', '📸 Instagram AI', '🤝 Get demo'],
+          ctaMsg: "Want to see this AI working for *your* business? Message us on Telegram — we'll set up a free live demo in 24 hours.",
+          ctaBtn: '💬 Message on Telegram',
+          responses: {
+            price:    "Three plans: **Starter $29/mo** (500 conversations, 1 channel), **Pro $79/mo** (3,000 conversations, 3 channels + SMM), **Enterprise $199/mo** (unlimited, all channels, AI sales calls). Most clients start on Pro. Which fits your team size?",
+            speed:    "4 seconds flat. 🚀 Your competitors take 2+ hours to reply — by then 80% of leads have moved on. Speed-to-lead is the #1 factor in whether a prospect buys. We've measured it across 300+ Tashkent businesses.",
+            telegram: "Telegram AI is our most popular service. It handles DMs from personal accounts using Telethon — qualifies leads, answers FAQs, books calendar slots, and syncs everything to Bitrix24. Zero missed leads, even at 3am. How many Telegram leads do you get per day?",
+            instagram:"Instagram AI writes posts, stories, and replies to DMs automatically — in your brand voice. Clients typically save 40+ hours/month and see 2x consistency. Are you currently managing Instagram manually?",
+            linkedin: "LinkedIn Outreach sends personalized connection requests + follow-up sequences targeting your exact ICP. One client got 14 qualified enterprise demos in month one. Want B2B leads or brand awareness?",
+            crm:      "Every conversation, lead score, and deal stage pushes to Bitrix24 automatically. No manual entry. Your pipeline is always clean and up-to-date. Are you currently using Bitrix24 or another CRM?",
+            leads:    "Most clients see 3x more qualified leads in the first 30 days — because the AI captures 100% of inbound and responds before competitors. What's your current average response time to a new lead?",
+            results:  "Real numbers from Tashkent clients: +38% close rate (Baraka Textile), 14 enterprise demos in month 1 (Samarkand Tech), 300 qualified leads in 2 months (Unison Group), response time 6h → 3min (AutoPark). Which metric matters most to you?",
+            demo:     "A free demo takes 30 minutes. We connect a live AI to your Telegram or Instagram, you watch it handle real conversations in real-time. No pitch, no pressure — just proof. When works for you?",
+            default:  "Good question! In short: Strateg AI replaces your manual lead-handling with an AI that responds in 4 seconds, qualifies prospects, and fills your Bitrix24 pipeline — while you sleep. What part of your sales process feels most painful right now?"
+          }
+        },
+        ru: {
+          btnLabel: 'Попробовать демо',
+          headerSub: 'AI-агент продаж · Онлайн',
+          placeholder: 'Напишите сообщение…',
+          greeting: "Привет! 👋 Я — AI-агент Strateg AI. Отвечаю менее чем за 4 секунды, 24/7 — точно так же, как буду работать в вашем бизнесе. Спрашивайте про цены, скорость или результаты клиентов.",
+          quick: ['💰 Цены', '⚡ Скорость?', '📱 Telegram AI', '📸 Instagram AI', '🤝 Получить демо'],
+          ctaMsg: "Хотите посмотреть, как этот AI работает в *вашем* бизнесе? Напишите нам в Telegram — бесплатное живое демо за 24 часа.",
+          ctaBtn: '💬 Написать в Telegram',
+          responses: {
+            price:    "Три тарифа: **Starter $29/мес** (500 диалогов, 1 канал), **Pro $79/мес** (3 000 диалогов, 3 канала + SMM), **Enterprise $199/мес** (без лимитов, все каналы, AI-звонки). Большинство клиентов начинают с Pro. Какой размер команды у вас?",
+            speed:    "4 секунды. 🚀 Конкуренты отвечают 2+ часа — к тому времени 80% лидов уже ушли. Скорость ответа — главный фактор конверсии. Мы замерили это на 300+ бизнесах в Ташкенте.",
+            telegram: "Telegram AI — наш самый популярный продукт. Работает с личных аккаунтов через Telethon: квалифицирует лидов, отвечает на вопросы, записывает в календарь и синхронизирует с Bitrix24. Ни один лид не пропадает, даже в 3 ночи. Сколько лидов приходит к вам в Telegram в день?",
+            instagram:"Instagram AI пишет посты, сторис и отвечает на DM автоматически — в вашем стиле. Клиенты экономят 40+ часов в месяц и вдвое увеличивают регулярность публикаций. Сейчас ведёте Instagram вручную?",
+            linkedin: "LinkedIn Outreach отправляет персональные запросы + follow-up цепочки точно на вашу целевую аудиторию. Один клиент получил 14 корпоративных демо за первый месяц. Вам нужны B2B-лиды или рост бренда?",
+            crm:      "Каждый диалог, скоринг лида и этап сделки автоматически передаётся в Bitrix24. Ноль ручного ввода. Pipeline всегда чистый и актуальный. Вы сейчас используете Bitrix24 или другую CRM?",
+            leads:    "Большинство клиентов видят 3x больше квалифицированных лидов в первые 30 дней — AI захватывает 100% входящих и отвечает раньше конкурентов. Какое сейчас среднее время ответа на новый лид у вас?",
+            results:  "Реальные цифры клиентов в Ташкенте: +38% закрываемость (Baraka Textile), 14 корпоративных демо за месяц (Samarkand Tech), 300 квалифицированных лидов за 2 месяца (Unison Group), время ответа 6ч → 3 мин (AutoPark). Какая метрика важнее всего для вас?",
+            demo:     "Бесплатное демо — 30 минут. Подключаем живой AI к вашему Telegram или Instagram, вы смотрите, как он ведёт реальные диалоги в реальном времени. Никакого давления — только доказательства. Когда удобно?",
+            default:  "Хороший вопрос! Кратко: Strateg AI заменяет ручную обработку лидов на AI, который отвечает за 4 секунды, квалифицирует клиентов и заполняет ваш Bitrix24 pipeline — пока вы спите. Какая часть продаж сейчас самая болезненная?"
+          }
+        },
+        uz: {
+          btnLabel: 'AI Demo sinash',
+          headerSub: 'AI savdo agenti · Onlayn',
+          placeholder: 'Xabar yozing…',
+          greeting: "Salom! 👋 Men Strateg AI savdo agentiman. 4 soniyadan kam vaqtda javob beraman, 24/7 — xuddi sizning biznesingiz uchun qiladim. Narx, tezlik yoki mijozlar natijalari haqida so'rang.",
+          quick: ['💰 Narxlar', '⚡ Tezlik?', '📱 Telegram AI', '📸 Instagram AI', '🤝 Demo olish'],
+          ctaMsg: "Bu AI *sizning* biznesingizda qanday ishlashini ko'rmoqchimisiz? Telegram orqali yozing — 24 soat ichida bepul jonli demo!",
+          ctaBtn: '💬 Telegram orqali yozish',
+          responses: {
+            price:    "Uch tarif: **Starter $29/oy** (500 suhbat, 1 kanal), **Pro $79/oy** (3 000 suhbat, 3 kanal + SMM), **Enterprise $199/oy** (cheksiz, barcha kanallar, AI qo'ng'iroqlar). Ko'p mijozlar Pro bilan boshlaydi. Jamoangiz qancha kishi?",
+            speed:    "4 soniya. 🚀 Raqobatchilar 2+ soat kutishadi — o'sha paytda leadlarning 80% ketib bo'lgan. Javob tezligi — konversiyaning 1-raqamli omili. Biz Toshkentdagi 300+ biznesda o'lchadik.",
+            telegram: "Telegram AI — eng mashhur xizmatimiz. Telethon orqali shaxsiy akkauntlardan ishlaydi: leadlarni kvalifikatsiya qiladi, savollariga javob beradi, kalendarga yozadi va Bitrix24 ga yuboradi. Hech bir lead o'tkazib yuborilmaydi, hatto kechasi soat 3 da ham. Sizga Telegramdan kuniga nechta lead keladi?",
+            instagram:"Instagram AI postlar, stories va DM larga avtomatik javob beradi — sizning brend ovozingizda. Mijozlar oyiga 40+ soat tejaydi va izchillik 2 baravarga oshadi. Hozir Instagramni qo'lda boshqaryapsizmi?",
+            linkedin: "LinkedIn Outreach aniq maqsadli auditoriyaga shaxsiylashtirilgan so'rovlar + follow-up ketma-ketliklarini yuboradi. Bir mijoz birinchi oyda 14 ta korporativ demo oldi. Sizga B2B leadlar yoki brendni rivojlantirish kerakmi?",
+            crm:      "Har bir suhbat, lead balli va bitim bosqichi avtomatik ravishda Bitrix24 ga yuboriladi. Qo'lda kiritish yo'q. Pipeline har doim toza va yangi. Hozir Bitrix24 yoki boshqa CRM ishlatasizmi?",
+            leads:    "Ko'p mijozlar birinchi 30 kunda 3 barobar ko'p kvalifitsiyalangan lead ko'radi — AI 100% kiruvchilarni ushlab, raqobatchilardan oldin javob beradi. Hozir yangi leadga o'rtacha javob vaqtingiz qancha?",
+            results:  "Toshkent mijozlaridan real raqamlar: +38% yopish darajasi (Baraka Textile), 1 oyda 14 ta korporativ demo (Samarkand Tech), 2 oyda 300 ta lead (Unison Group), javob vaqti 6 soat → 3 daqiqa (AutoPark). Siz uchun qaysi ko'rsatkich muhimroq?",
+            demo:     "Bepul demo 30 daqiqa oladi. Sizning Telegram yoki Instagramingizga jonli AI ulaymiz, u real suhbatlarni real vaqtda qanday yuritishini ko'rasiz. Hech qanday bosim yo'q — faqat isbotlar. Qachon qulay?",
+            default:  "Yaxshi savol! Qisqacha: Strateg AI qo'lda lead ishlashni 4 soniyada javob beruvchi, mijozlarni kvalifikatsiya qiluvchi va Bitrix24 pipeline ni to'ldiruvchi AI bilan almashtiradi — siz uxlayotganingizda ham. Hozir savdo jarayoningizning qaysi qismi eng og'ir?"
+          }
+        }
+      };
+
+      function t() { return i18nChat[window.currentLang] || i18nChat.en; }
+
+      function scrollBottom() {
+        const b = document.getElementById('chBody');
+        if (b) b.scrollTop = b.scrollHeight;
+      }
+
+      function addMsg(text, who) {
+        const b = document.getElementById('chBody');
+        const wrap = document.createElement('div');
+        wrap.className = 'cmsg ' + who;
+        const bubble = document.createElement('div');
+        bubble.className = 'cbubble';
+        bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        wrap.appendChild(bubble);
+        b.appendChild(wrap);
+        scrollBottom();
+        msgCount++;
+      }
+
+      function showTyping() {
+        const b = document.getElementById('chBody');
+        const wrap = document.createElement('div');
+        wrap.className = 'cmsg ai';
+        wrap.id = 'typingIndicator';
+        const bubble = document.createElement('div');
+        bubble.className = 'ctyping';
+        bubble.innerHTML = '<span></span><span></span><span></span>';
+        wrap.appendChild(bubble);
+        b.appendChild(wrap);
+        scrollBottom();
+      }
+
+      function removeTyping() {
+        const el = document.getElementById('typingIndicator');
+        if (el) el.remove();
+      }
+
+      function aiReply(text, delay) {
+        isTyping = true;
+        document.getElementById('chatSend').disabled = true;
+        showTyping();
+        setTimeout(function () {
+          removeTyping();
+          addMsg(text, 'ai');
+          isTyping = false;
+          document.getElementById('chatSend').disabled = false;
+          if (msgCount >= 4) showCTA();
+        }, delay || 1800);
+      }
+
+      function showCTA() {
+        const existing = document.getElementById('chatCTA');
+        if (existing) return;
+        const b = document.getElementById('chBody');
+        const wrap = document.createElement('div');
+        wrap.id = 'chatCTA';
+        wrap.className = 'cmsg ai';
+        const bubble = document.createElement('div');
+        bubble.className = 'cbubble';
+        bubble.style.cssText = 'background:#eff6ff;color:#1e3a8a;';
+        bubble.innerHTML = t().ctaMsg.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        const btn = document.createElement('a');
+        btn.href = TELEGRAM;
+        btn.target = '_blank';
+        btn.style.cssText = 'display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:#2563eb;color:white;border-radius:9999px;padding:7px 14px;font-size:11.5px;font-weight:700;text-decoration:none;';
+        btn.textContent = t().ctaBtn;
+        bubble.appendChild(document.createElement('br'));
+        bubble.appendChild(btn);
+        wrap.appendChild(bubble);
+        b.appendChild(wrap);
+        scrollBottom();
+      }
+
+      function classify(msg) {
+        const m = msg.toLowerCase();
+        if (/price|pricing|cost|narx|нарх|цена|стоим|план|plan|dollar|\$|29|79|199/.test(m)) return 'price';
+        if (/fast|speed|second|tez|tezlik|sekund|быстро|скорост|секунд|4/.test(m)) return 'speed';
+        if (/telegram|tg|telethon/.test(m)) return 'telegram';
+        if (/instagram|ig|insta/.test(m)) return 'instagram';
+        if (/linkedin|linked/.test(m)) return 'linkedin';
+        if (/crm|bitrix/.test(m)) return 'crm';
+        if (/lead|лид|mijoz|клиент/.test(m)) return 'leads';
+        if (/result|natija|result|итог|кейс|case|client|mijoz/.test(m)) return 'results';
+        if (/demo|trial|sinov|попробо/.test(m)) return 'demo';
+        return 'default';
+      }
+
+      function setQuickReplies(items) {
+        const q = document.getElementById('chQuick');
+        q.innerHTML = '';
+        (items || []).forEach(function (label) {
+          const b = document.createElement('button');
+          b.className = 'cq-btn';
+          b.textContent = label;
+          b.onclick = function () {
+            q.innerHTML = '';
+            addMsg(label, 'user');
+            const key = classify(label);
+            aiReply(t().responses[key] || t().responses.default, 1600);
+          };
+          q.appendChild(b);
+        });
+      }
+
+      window.openChat = function () {
+        chatOpen = true;
+        document.getElementById('chatPanel').classList.add('open');
+        document.getElementById('chatBtn').classList.add('hidden');
+        document.getElementById('chatInput').focus();
+        if (!chatStarted) {
+          chatStarted = true;
+          const lang = window.currentLang || 'en';
+          document.getElementById('chSub').textContent = t().headerSub;
+          document.getElementById('chatInput').placeholder = t().placeholder;
+          document.getElementById('chBtnLabel').textContent = t().btnLabel;
+          setTimeout(function () {
+            showTyping();
+            setTimeout(function () {
+              removeTyping();
+              addMsg(t().greeting, 'ai');
+              setQuickReplies(t().quick);
+            }, 1200);
+          }, 300);
+        }
+      };
+
+      window.closeChat = function () {
+        chatOpen = false;
+        document.getElementById('chatPanel').classList.remove('open');
+        document.getElementById('chatBtn').classList.remove('hidden');
+      };
+
+      window.sendChat = function () {
+        if (isTyping) return;
+        const input = document.getElementById('chatInput');
+        const msg = input.value.trim();
+        if (!msg) return;
+        input.value = '';
+        document.getElementById('chQuick').innerHTML = '';
+        addMsg(msg, 'user');
+        const key = classify(msg);
+        const delay = 1400 + Math.random() * 800;
+        aiReply(t().responses[key] || t().responses.default, delay);
+      };
+
+      // Update chat labels when language changes
+      const _origSetLang = window.setLang;
+      // Patch after DOMContentLoaded since setLang is defined later in the script
+      document.addEventListener('DOMContentLoaded', function () {
+        const orig = window.setLang;
+        window.setLang = function (lang) {
+          orig(lang);
+          document.getElementById('chSub').textContent = i18nChat[lang] ? i18nChat[lang].headerSub : i18nChat.en.headerSub;
+          document.getElementById('chatInput').placeholder = i18nChat[lang] ? i18nChat[lang].placeholder : i18nChat.en.placeholder;
+          document.getElementById('chBtnLabel').textContent = i18nChat[lang] ? i18nChat[lang].btnLabel : i18nChat.en.btnLabel;
+        };
+        // Set initial labels
+        const initLang = window.currentLang || 'uz';
+        document.getElementById('chSub').textContent = i18nChat[initLang] ? i18nChat[initLang].headerSub : i18nChat.en.headerSub;
+        document.getElementById('chatInput').placeholder = i18nChat[initLang] ? i18nChat[initLang].placeholder : i18nChat.en.placeholder;
+        document.getElementById('chBtnLabel').textContent = i18nChat[initLang] ? i18nChat[initLang].btnLabel : i18nChat.en.btnLabel;
+      });
+    })();
 
     // ============ SCROLL REVEAL ============
     const revealObs = new IntersectionObserver(
