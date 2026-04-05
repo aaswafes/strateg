@@ -438,45 +438,74 @@
     .snap-section{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;display:flex;flex-direction:column;}
     .snap-last{height:100dvh;scroll-snap-align:start;scroll-snap-stop:normal;overflow:hidden;display:flex;flex-direction:column;}
 
-    /* ============ CHAT WIDGET ============ */
-    #chatWidget{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
-    #chatBtn{display:flex;align-items:center;gap:8px;background:#2563eb;color:white;border:none;cursor:pointer;padding:12px 20px;border-radius:9999px;box-shadow:0 8px 32px -4px rgba(37,99,235,.55);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,opacity .2s;}
-    #chatBtn:hover{transform:translateY(-3px);box-shadow:0 16px 40px -8px rgba(37,99,235,.65);}
-    #chatBtn.hidden{opacity:0;pointer-events:none;transform:translateY(8px);}
-    #chatPanel{width:340px;background:white;border-radius:20px;box-shadow:0 24px 64px -12px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.06);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(16px) scale(.96);pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1);max-height:500px;}
+    /* ============ CHAT WIDGET — TELEGRAM STYLE ============ */
+    #chatWidget{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+
+    /* Floating button */
+    #chatBtn{display:flex;align-items:center;gap:8px;background:#2AABEE;color:white;border:none;cursor:pointer;padding:11px 20px 11px 14px;border-radius:9999px;box-shadow:0 6px 28px -4px rgba(42,171,238,.6);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,opacity .25s,visibility .25s;}
+    #chatBtn:hover{transform:translateY(-3px);box-shadow:0 14px 36px -6px rgba(42,171,238,.7);}
+    #chatBtn.hidden{opacity:0;pointer-events:none;visibility:hidden;transform:translateY(6px);}
+    .chbtn-icon{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+    /* Panel */
+    #chatPanel{width:348px;background:#fff;border-radius:16px;box-shadow:0 20px 60px -10px rgba(0,0,0,.22),0 0 0 1px rgba(0,0,0,.06);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(18px) scale(.95);pointer-events:none;transition:opacity .32s cubic-bezier(.16,1,.3,1),transform .32s cubic-bezier(.16,1,.3,1);max-height:520px;}
     #chatPanel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
-    .ch-header{background:#2563eb;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
-    .ch-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-    .ch-info{flex:1;}
-    .ch-name{color:white;font-weight:700;font-size:14px;line-height:1.2;}
-    .ch-status{display:flex;align-items:center;gap:5px;margin-top:2px;}
-    .ch-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-live 2s ease-in-out infinite;flex-shrink:0;}
-    .ch-sub{color:rgba(255,255,255,.75);font-size:11px;font-weight:500;}
-    .ch-close{background:rgba(255,255,255,.15);border:none;cursor:pointer;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
-    .ch-close:hover{background:rgba(255,255,255,.28);}
-    .ch-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;min-height:200px;max-height:280px;scroll-behavior:smooth;}
-    .ch-body::-webkit-scrollbar{width:0;}
-    .cmsg{display:flex;gap:7px;max-width:88%;}
+
+    /* Header — Telegram blue */
+    .ch-header{background:linear-gradient(135deg,#2AABEE 0%,#229ED9 100%);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+    .ch-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;font-weight:800;color:white;letter-spacing:-.5px;border:2px solid rgba(255,255,255,.35);}
+    .ch-info{flex:1;min-width:0;}
+    .ch-name{color:white;font-weight:700;font-size:14px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .ch-status{display:flex;align-items:center;gap:4px;margin-top:1px;}
+    .ch-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse-live 2s ease-in-out infinite;flex-shrink:0;}
+    .ch-sub{color:rgba(255,255,255,.8);font-size:10.5px;font-weight:500;}
+    .ch-close{background:rgba(255,255,255,.18);border:none;cursor:pointer;color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .18s;}
+    .ch-close:hover{background:rgba(255,255,255,.32);}
+
+    /* Chat body — Telegram wallpaper feel */
+    .ch-body{flex:1;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:6px;min-height:220px;max-height:300px;scroll-behavior:smooth;background:#e5ddd5 url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8bdb1' fill-opacity='0.18'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+    .ch-body::-webkit-scrollbar{width:4px;}
+    .ch-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;}
+
+    /* Message bubbles */
+    .cmsg{display:flex;flex-direction:column;max-width:82%;}
     .cmsg.ai{align-self:flex-start;}
-    .cmsg.user{align-self:flex-end;flex-direction:row-reverse;}
-    .cbubble{padding:9px 13px;border-radius:16px;font-size:12.5px;line-height:1.55;font-weight:500;}
-    .cmsg.ai .cbubble{background:#f1f5f9;color:#18181b;border-bottom-left-radius:4px;}
-    .cmsg.user .cbubble{background:#2563eb;color:white;border-bottom-right-radius:4px;}
-    .ctyping{padding:10px 13px;display:flex;gap:4px;align-items:center;background:#f1f5f9;border-radius:16px;border-bottom-left-radius:4px;}
-    .ctyping span{width:6px;height:6px;border-radius:50%;background:#94a3b8;display:inline-block;}
+    .cmsg.user{align-self:flex-end;}
+    .cbubble{padding:8px 12px;font-size:13px;line-height:1.5;font-weight:400;position:relative;word-break:break-word;}
+    .cmsg.ai .cbubble{background:#ffffff;color:#111827;border-radius:4px 16px 16px 16px;box-shadow:0 1px 2px rgba(0,0,0,.13);}
+    .cmsg.user .cbubble{background:#effdde;color:#111827;border-radius:16px 4px 16px 16px;box-shadow:0 1px 2px rgba(0,0,0,.13);}
+    .cmsg-time{font-size:10px;color:rgba(0,0,0,.38);margin-top:2px;font-weight:500;}
+    .cmsg.ai .cmsg-time{align-self:flex-start;padding-left:4px;}
+    .cmsg.user .cmsg-time{align-self:flex-end;padding-right:4px;display:flex;align-items:center;gap:3px;}
+    /* double tick */
+    .cmsg.user .cmsg-time::after{content:'';display:inline-block;width:14px;height:8px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Cpath d='M1 4l3.5 3.5L12 1' stroke='%234ade80' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 4l3.5 3.5L16 1' stroke='%234ade80' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:contain;}
+
+    /* Typing indicator */
+    .ctyping-wrap{align-self:flex-start;}
+    .ctyping{padding:10px 14px;display:inline-flex;gap:4px;align-items:center;background:#fff;border-radius:4px 16px 16px 16px;box-shadow:0 1px 2px rgba(0,0,0,.13);}
+    .ctyping span{width:6px;height:6px;border-radius:50%;background:#9ca3af;display:inline-block;}
     .ctyping span:nth-child(1){animation:bounce-dot 1.2s ease-in-out infinite 0ms;}
     .ctyping span:nth-child(2){animation:bounce-dot 1.2s ease-in-out infinite 160ms;}
     .ctyping span:nth-child(3){animation:bounce-dot 1.2s ease-in-out infinite 320ms;}
-    .ch-quick{padding:8px 10px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid #f1f5f9;flex-shrink:0;}
-    .cq-btn{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:9999px;padding:5px 11px;font-size:11px;font-weight:600;cursor:pointer;transition:background .18s,transform .15s;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;}
-    .cq-btn:hover{background:#dbeafe;transform:translateY(-1px);}
-    .ch-foot{padding:10px 12px;border-top:1px solid #f1f5f9;display:flex;gap:8px;align-items:center;flex-shrink:0;}
-    #chatInput{flex:1;border:1px solid #e5e7eb;border-radius:9999px;padding:8px 14px;font-size:12.5px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s;font-weight:500;}
-    #chatInput:focus{border-color:#2563eb;}
-    #chatSend{width:34px;height:34px;border-radius:50%;background:#2563eb;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;flex-shrink:0;}
-    #chatSend:hover{background:#1d4ed8;transform:scale(1.08);}
-    #chatSend:disabled{background:#e5e7eb;cursor:not-allowed;transform:none;}
-    @media(max-width:480px){#chatPanel{width:calc(100vw - 32px);}#chatWidget{right:16px;bottom:16px;}}
+
+    /* Date chip */
+    .ch-date-chip{align-self:center;background:rgba(0,0,0,.25);color:white;font-size:10px;font-weight:600;padding:3px 10px;border-radius:9999px;margin:4px 0;}
+
+    /* Footer */
+    .ch-foot{padding:8px 10px;background:#f0f0f0;display:flex;gap:8px;align-items:center;flex-shrink:0;border-top:1px solid #ddd;}
+    #chatInput{flex:1;background:white;border:none;border-radius:22px;padding:9px 14px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#111827;box-shadow:0 1px 3px rgba(0,0,0,.1);}
+    #chatInput::placeholder{color:#9ca3af;}
+    #chatSend{width:36px;height:36px;border-radius:50%;background:#2AABEE;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s,transform .15s;flex-shrink:0;box-shadow:0 2px 8px rgba(42,171,238,.45);}
+    #chatSend:hover{background:#229ED9;transform:scale(1.08);}
+    #chatSend:disabled{background:#d1d5db;cursor:not-allowed;transform:none;box-shadow:none;}
+
+    /* CTA bubble */
+    .ch-cta-bubble{background:#fff;border-radius:4px 16px 16px 16px;box-shadow:0 1px 2px rgba(0,0,0,.13);padding:10px 13px;max-width:82%;align-self:flex-start;}
+    .ch-cta-bubble p{font-size:13px;color:#111827;line-height:1.5;margin-bottom:8px;}
+    .ch-cta-link{display:inline-flex;align-items:center;gap:6px;background:#2AABEE;color:white;border-radius:9999px;padding:7px 16px;font-size:12px;font-weight:700;text-decoration:none;transition:background .18s;}
+    .ch-cta-link:hover{background:#229ED9;}
+
+    @media(max-width:480px){#chatPanel{width:calc(100vw - 32px);}#chatWidget{right:12px;bottom:12px;}}
   </style>
 </head>
 
@@ -1108,19 +1137,12 @@
   <div id="chatWidget">
     <div id="chatPanel">
       <div class="ch-header">
-        <div class="ch-avatar">
-          <svg width="18" height="18" viewBox="0 0 15 15" fill="none">
-            <circle cx="4.5" cy="4.5" r="2.5" fill="#93c5fd" opacity=".8"/>
-            <circle cx="10.5" cy="4.5" r="2.5" fill="white"/>
-            <circle cx="4.5" cy="10.5" r="2.5" fill="white"/>
-            <circle cx="10.5" cy="10.5" r="2.5" fill="#93c5fd" opacity=".8"/>
-          </svg>
-        </div>
+        <div class="ch-avatar">H</div>
         <div class="ch-info">
-          <div class="ch-name">Strateg AI</div>
+          <div class="ch-name">Humoyun · Strateg AI</div>
           <div class="ch-status">
             <div class="ch-dot"></div>
-            <span class="ch-sub" id="chSub">AI Sales Agent · Online</span>
+            <span class="ch-sub">onlayn</span>
           </div>
         </div>
         <button class="ch-close" onclick="closeChat()" aria-label="Close">
@@ -1128,17 +1150,18 @@
         </button>
       </div>
       <div class="ch-body" id="chBody"></div>
-      <div class="ch-quick" id="chQuick"></div>
       <div class="ch-foot">
-        <input id="chatInput" type="text" maxlength="200" onkeydown="if(event.key==='Enter')sendChat()" />
+        <input id="chatInput" type="text" maxlength="200" placeholder="Xabar yozing…" onkeydown="if(event.key==='Enter')sendChat()" />
         <button id="chatSend" onclick="sendChat()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
     </div>
     <button id="chatBtn" onclick="openChat()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span id="chBtnLabel">Try AI Demo</span>
+      <div class="chbtn-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg>
+      </div>
+      <span id="chBtnLabel">Humoyun bilan gaplash</span>
     </button>
   </div>
 
@@ -1392,82 +1415,39 @@
     // ============ CHAT WIDGET ============
     (function () {
       const TELEGRAM = 'https://t.me/aziz_nizom_shaxsiy';
-      let chatOpen = false;
       let isTyping = false;
       let msgCount = 0;
       let chatStarted = false;
 
-      const i18nChat = {
-        en: {
-          btnLabel: 'Try AI Demo',
-          headerSub: 'AI Sales Agent · Online',
-          placeholder: 'Type a message…',
-          greeting: "Hey! 👋 I'm the Strateg AI sales agent. I reply in under 4 seconds, 24/7 — just like I'll do for your business. Ask me anything about pricing, how it works, or what results clients are getting.",
-          quick: ['💰 Pricing', '⚡ How fast?', '📱 Telegram AI', '📸 Instagram AI', '🤝 Get demo'],
-          ctaMsg: "Want to see this AI working for *your* business? Message us on Telegram — we'll set up a free live demo in 24 hours.",
-          ctaBtn: '💬 Message on Telegram',
-          responses: {
-            price:    "Three plans: **Starter $29/mo** (500 conversations, 1 channel), **Pro $79/mo** (3,000 conversations, 3 channels + SMM), **Enterprise $199/mo** (unlimited, all channels, AI sales calls). Most clients start on Pro. Which fits your team size?",
-            speed:    "4 seconds flat. 🚀 Your competitors take 2+ hours to reply — by then 80% of leads have moved on. Speed-to-lead is the #1 factor in whether a prospect buys. We've measured it across 300+ Tashkent businesses.",
-            telegram: "Telegram AI is our most popular service. It handles DMs from personal accounts using Telethon — qualifies leads, answers FAQs, books calendar slots, and syncs everything to Bitrix24. Zero missed leads, even at 3am. How many Telegram leads do you get per day?",
-            instagram:"Instagram AI writes posts, stories, and replies to DMs automatically — in your brand voice. Clients typically save 40+ hours/month and see 2x consistency. Are you currently managing Instagram manually?",
-            linkedin: "LinkedIn Outreach sends personalized connection requests + follow-up sequences targeting your exact ICP. One client got 14 qualified enterprise demos in month one. Want B2B leads or brand awareness?",
-            crm:      "Every conversation, lead score, and deal stage pushes to Bitrix24 automatically. No manual entry. Your pipeline is always clean and up-to-date. Are you currently using Bitrix24 or another CRM?",
-            leads:    "Most clients see 3x more qualified leads in the first 30 days — because the AI captures 100% of inbound and responds before competitors. What's your current average response time to a new lead?",
-            results:  "Real numbers from Tashkent clients: +38% close rate (Baraka Textile), 14 enterprise demos in month 1 (Samarkand Tech), 300 qualified leads in 2 months (Unison Group), response time 6h → 3min (AutoPark). Which metric matters most to you?",
-            demo:     "A free demo takes 30 minutes. We connect a live AI to your Telegram or Instagram, you watch it handle real conversations in real-time. No pitch, no pressure — just proof. When works for you?",
-            default:  "Good question! In short: Strateg AI replaces your manual lead-handling with an AI that responds in 4 seconds, qualifies prospects, and fills your Bitrix24 pipeline — while you sleep. What part of your sales process feels most painful right now?"
-          }
-        },
-        ru: {
-          btnLabel: 'Попробовать демо',
-          headerSub: 'AI-агент продаж · Онлайн',
-          placeholder: 'Напишите сообщение…',
-          greeting: "Привет! 👋 Я — AI-агент Strateg AI. Отвечаю менее чем за 4 секунды, 24/7 — точно так же, как буду работать в вашем бизнесе. Спрашивайте про цены, скорость или результаты клиентов.",
-          quick: ['💰 Цены', '⚡ Скорость?', '📱 Telegram AI', '📸 Instagram AI', '🤝 Получить демо'],
-          ctaMsg: "Хотите посмотреть, как этот AI работает в *вашем* бизнесе? Напишите нам в Telegram — бесплатное живое демо за 24 часа.",
-          ctaBtn: '💬 Написать в Telegram',
-          responses: {
-            price:    "Три тарифа: **Starter $29/мес** (500 диалогов, 1 канал), **Pro $79/мес** (3 000 диалогов, 3 канала + SMM), **Enterprise $199/мес** (без лимитов, все каналы, AI-звонки). Большинство клиентов начинают с Pro. Какой размер команды у вас?",
-            speed:    "4 секунды. 🚀 Конкуренты отвечают 2+ часа — к тому времени 80% лидов уже ушли. Скорость ответа — главный фактор конверсии. Мы замерили это на 300+ бизнесах в Ташкенте.",
-            telegram: "Telegram AI — наш самый популярный продукт. Работает с личных аккаунтов через Telethon: квалифицирует лидов, отвечает на вопросы, записывает в календарь и синхронизирует с Bitrix24. Ни один лид не пропадает, даже в 3 ночи. Сколько лидов приходит к вам в Telegram в день?",
-            instagram:"Instagram AI пишет посты, сторис и отвечает на DM автоматически — в вашем стиле. Клиенты экономят 40+ часов в месяц и вдвое увеличивают регулярность публикаций. Сейчас ведёте Instagram вручную?",
-            linkedin: "LinkedIn Outreach отправляет персональные запросы + follow-up цепочки точно на вашу целевую аудиторию. Один клиент получил 14 корпоративных демо за первый месяц. Вам нужны B2B-лиды или рост бренда?",
-            crm:      "Каждый диалог, скоринг лида и этап сделки автоматически передаётся в Bitrix24. Ноль ручного ввода. Pipeline всегда чистый и актуальный. Вы сейчас используете Bitrix24 или другую CRM?",
-            leads:    "Большинство клиентов видят 3x больше квалифицированных лидов в первые 30 дней — AI захватывает 100% входящих и отвечает раньше конкурентов. Какое сейчас среднее время ответа на новый лид у вас?",
-            results:  "Реальные цифры клиентов в Ташкенте: +38% закрываемость (Baraka Textile), 14 корпоративных демо за месяц (Samarkand Tech), 300 квалифицированных лидов за 2 месяца (Unison Group), время ответа 6ч → 3 мин (AutoPark). Какая метрика важнее всего для вас?",
-            demo:     "Бесплатное демо — 30 минут. Подключаем живой AI к вашему Telegram или Instagram, вы смотрите, как он ведёт реальные диалоги в реальном времени. Никакого давления — только доказательства. Когда удобно?",
-            default:  "Хороший вопрос! Кратко: Strateg AI заменяет ручную обработку лидов на AI, который отвечает за 4 секунды, квалифицирует клиентов и заполняет ваш Bitrix24 pipeline — пока вы спите. Какая часть продаж сейчас самая болезненная?"
-          }
-        },
-        uz: {
-          btnLabel: 'AI Demo sinash',
-          headerSub: 'AI savdo agenti · Onlayn',
-          placeholder: 'Xabar yozing…',
-          greeting: "Salom! 👋 Men Strateg AI savdo agentiman. 4 soniyadan kam vaqtda javob beraman, 24/7 — xuddi sizning biznesingiz uchun qiladim. Narx, tezlik yoki mijozlar natijalari haqida so'rang.",
-          quick: ['💰 Narxlar', '⚡ Tezlik?', '📱 Telegram AI', '📸 Instagram AI', '🤝 Demo olish'],
-          ctaMsg: "Bu AI *sizning* biznesingizda qanday ishlashini ko'rmoqchimisiz? Telegram orqali yozing — 24 soat ichida bepul jonli demo!",
-          ctaBtn: '💬 Telegram orqali yozish',
-          responses: {
-            price:    "Uch tarif: **Starter $29/oy** (500 suhbat, 1 kanal), **Pro $79/oy** (3 000 suhbat, 3 kanal + SMM), **Enterprise $199/oy** (cheksiz, barcha kanallar, AI qo'ng'iroqlar). Ko'p mijozlar Pro bilan boshlaydi. Jamoangiz qancha kishi?",
-            speed:    "4 soniya. 🚀 Raqobatchilar 2+ soat kutishadi — o'sha paytda leadlarning 80% ketib bo'lgan. Javob tezligi — konversiyaning 1-raqamli omili. Biz Toshkentdagi 300+ biznesda o'lchadik.",
-            telegram: "Telegram AI — eng mashhur xizmatimiz. Telethon orqali shaxsiy akkauntlardan ishlaydi: leadlarni kvalifikatsiya qiladi, savollariga javob beradi, kalendarga yozadi va Bitrix24 ga yuboradi. Hech bir lead o'tkazib yuborilmaydi, hatto kechasi soat 3 da ham. Sizga Telegramdan kuniga nechta lead keladi?",
-            instagram:"Instagram AI postlar, stories va DM larga avtomatik javob beradi — sizning brend ovozingizda. Mijozlar oyiga 40+ soat tejaydi va izchillik 2 baravarga oshadi. Hozir Instagramni qo'lda boshqaryapsizmi?",
-            linkedin: "LinkedIn Outreach aniq maqsadli auditoriyaga shaxsiylashtirilgan so'rovlar + follow-up ketma-ketliklarini yuboradi. Bir mijoz birinchi oyda 14 ta korporativ demo oldi. Sizga B2B leadlar yoki brendni rivojlantirish kerakmi?",
-            crm:      "Har bir suhbat, lead balli va bitim bosqichi avtomatik ravishda Bitrix24 ga yuboriladi. Qo'lda kiritish yo'q. Pipeline har doim toza va yangi. Hozir Bitrix24 yoki boshqa CRM ishlatasizmi?",
-            leads:    "Ko'p mijozlar birinchi 30 kunda 3 barobar ko'p kvalifitsiyalangan lead ko'radi — AI 100% kiruvchilarni ushlab, raqobatchilardan oldin javob beradi. Hozir yangi leadga o'rtacha javob vaqtingiz qancha?",
-            results:  "Toshkent mijozlaridan real raqamlar: +38% yopish darajasi (Baraka Textile), 1 oyda 14 ta korporativ demo (Samarkand Tech), 2 oyda 300 ta lead (Unison Group), javob vaqti 6 soat → 3 daqiqa (AutoPark). Siz uchun qaysi ko'rsatkich muhimroq?",
-            demo:     "Bepul demo 30 daqiqa oladi. Sizning Telegram yoki Instagramingizga jonli AI ulaymiz, u real suhbatlarni real vaqtda qanday yuritishini ko'rasiz. Hech qanday bosim yo'q — faqat isbotlar. Qachon qulay?",
-            default:  "Yaxshi savol! Qisqacha: Strateg AI qo'lda lead ishlashni 4 soniyada javob beruvchi, mijozlarni kvalifikatsiya qiluvchi va Bitrix24 pipeline ni to'ldiruvchi AI bilan almashtiradi — siz uxlayotganingizda ham. Hozir savdo jarayoningizning qaysi qismi eng og'ir?"
-          }
-        }
+      const GREETING = "Assalomu alaykum! 👋 Mening ismim Humoyun, xizmatlarimizni Strateg AI misolida ko'rsataman 🙂\n\nSizga qanday murojaat qilsam bo'ladi?";
+
+      const responses = {
+        name:      function(n){ return 'Juda yaxshi, ' + n + '! 🤝 Sizga qanday yordam bera olaman? Bizning AI xizmatlari haqida bilib olishni xohlaysizmi?'; },
+        price:     "Uch tarif bor:\n\n💼 **Starter** — $29/oy (500 suhbat, 1 kanal)\n🚀 **Pro** — $79/oy (3 000 suhbat, 3 kanal + SMM)\n🏢 **Enterprise** — $199/oy (cheksiz, barcha kanallar)\n\nKo'pchilik Pro dan boshlaydi. Jamoangiz necha kishi?",
+        speed:     "4 soniya ⚡\n\nRaqobatchilaringiz 2+ soat javob kutishadi — o'sha paytda leadlarning 80% ketib bo'lgan. Biz Toshkentdagi 300+ biznesda o'lchadik.",
+        telegram:  "Telegram AI — eng mashhur xizmatimiz 📱\n\nTelethon orqali shaxsiy akkauntdan ishlaydi: leadlarni kvalifikatsiya qiladi, savollarga javob beradi, kalendarga yozadi, Bitrix24 ga yuboradi.\n\nSizga Telegramdan kuniga nechta lead keladi?",
+        instagram: "Instagram AI postlar, stories va DM larga avtomatik javob beradi — sizning brend ovozingizda 📸\n\nMijozlar oyiga 40+ soat tejaydi va izchillik 2 baravarga oshadi. Hozir Instagramni qo'lda boshqaryapsizmi?",
+        results:   "Real natijalar 📊\n\n• Baraka Textile: +38% yopish\n• Samarkand Tech: 1 oyda 14 ta demo\n• Unison Group: 2 oyda 300 lead\n• AutoPark: javob 6 soat → 3 daqiqa\n\nSiz uchun qaysi ko'rsatkich muhimroq?",
+        demo:      "Bepul demo — 30 daqiqa 🎯\n\nSizning Telegram yoki Instagramingizga jonli AI ulaymiz, real suhbatlarni ko'rasiz. Hech qanday bosim yo'q.\n\nQachon qulay?",
+        default:   "Tushundim! 😊 Strateg AI sizning biznesingizga qo'lda lead ishlashni avtomatlashtiradi — 4 soniyada javob beruvchi, 24/7 ishlovchi AI bilan.\n\nQaysi yo'nalish sizga qiziq: Telegram, Instagram yoki narxlar?"
       };
 
-      function t() { return i18nChat[window.currentLang] || i18nChat.en; }
+      function nowTime() {
+        const d = new Date();
+        return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+      }
 
       function scrollBottom() {
         const b = document.getElementById('chBody');
         if (b) b.scrollTop = b.scrollHeight;
+      }
+
+      function addDateChip() {
+        const b = document.getElementById('chBody');
+        const chip = document.createElement('div');
+        chip.className = 'ch-date-chip';
+        chip.textContent = 'Bugun';
+        b.appendChild(chip);
       }
 
       function addMsg(text, who) {
@@ -1476,8 +1456,14 @@
         wrap.className = 'cmsg ' + who;
         const bubble = document.createElement('div');
         bubble.className = 'cbubble';
-        bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        bubble.innerHTML = text
+          .replace(/\n/g, '<br>')
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         wrap.appendChild(bubble);
+        const time = document.createElement('div');
+        time.className = 'cmsg-time';
+        time.textContent = nowTime();
+        wrap.appendChild(time);
         b.appendChild(wrap);
         scrollBottom();
         msgCount++;
@@ -1486,12 +1472,12 @@
       function showTyping() {
         const b = document.getElementById('chBody');
         const wrap = document.createElement('div');
-        wrap.className = 'cmsg ai';
+        wrap.className = 'ctyping-wrap';
         wrap.id = 'typingIndicator';
-        const bubble = document.createElement('div');
-        bubble.className = 'ctyping';
-        bubble.innerHTML = '<span></span><span></span><span></span>';
-        wrap.appendChild(bubble);
+        const dot = document.createElement('div');
+        dot.className = 'ctyping';
+        dot.innerHTML = '<span></span><span></span><span></span>';
+        wrap.appendChild(dot);
         b.appendChild(wrap);
         scrollBottom();
       }
@@ -1510,88 +1496,66 @@
           addMsg(text, 'ai');
           isTyping = false;
           document.getElementById('chatSend').disabled = false;
-          if (msgCount >= 4) showCTA();
+          if (msgCount >= 5) showCTA();
         }, delay || 1800);
       }
 
       function showCTA() {
-        const existing = document.getElementById('chatCTA');
-        if (existing) return;
+        if (document.getElementById('chatCTA')) return;
         const b = document.getElementById('chBody');
         const wrap = document.createElement('div');
         wrap.id = 'chatCTA';
-        wrap.className = 'cmsg ai';
-        const bubble = document.createElement('div');
-        bubble.className = 'cbubble';
-        bubble.style.cssText = 'background:#eff6ff;color:#1e3a8a;';
-        bubble.innerHTML = t().ctaMsg.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        wrap.className = 'ch-cta-bubble';
+        wrap.innerHTML = '<p>Strateg AI ni <strong>o\'z biznesingizda</strong> ko\'rmoqchimisiz? Bepul jonli demo — 24 soat ichida!</p>';
         const btn = document.createElement('a');
         btn.href = TELEGRAM;
         btn.target = '_blank';
-        btn.style.cssText = 'display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:#2563eb;color:white;border-radius:9999px;padding:7px 14px;font-size:11.5px;font-weight:700;text-decoration:none;';
-        btn.textContent = t().ctaBtn;
-        bubble.appendChild(document.createElement('br'));
-        bubble.appendChild(btn);
-        wrap.appendChild(bubble);
+        btn.className = 'ch-cta-link';
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg> Telegram orqali yozish';
+        wrap.appendChild(btn);
         b.appendChild(wrap);
         scrollBottom();
       }
 
       function classify(msg) {
         const m = msg.toLowerCase();
-        if (/price|pricing|cost|narx|нарх|цена|стоим|план|plan|dollar|\$|29|79|199/.test(m)) return 'price';
-        if (/fast|speed|second|tez|tezlik|sekund|быстро|скорост|секунд|4/.test(m)) return 'speed';
+        if (/ismim|mening|меня зовут|my name|men\s+\w+man/.test(m)) return 'name_reply';
+        if (/narx|price|pricing|cost|цена|стоим|\$|29|79|199|plan/.test(m)) return 'price';
+        if (/tez|4 son|speed|fast|sekund|быстро|скорост/.test(m)) return 'speed';
         if (/telegram|tg|telethon/.test(m)) return 'telegram';
         if (/instagram|ig|insta/.test(m)) return 'instagram';
-        if (/linkedin|linked/.test(m)) return 'linkedin';
-        if (/crm|bitrix/.test(m)) return 'crm';
-        if (/lead|лид|mijoz|клиент/.test(m)) return 'leads';
-        if (/result|natija|result|итог|кейс|case|client|mijoz/.test(m)) return 'results';
-        if (/demo|trial|sinov|попробо/.test(m)) return 'demo';
+        if (/natija|result|кейс|case|mijoz|клиент|итог/.test(m)) return 'results';
+        if (/demo|sinov|trial|попробо/.test(m)) return 'demo';
         return 'default';
       }
 
-      function setQuickReplies(items) {
-        const q = document.getElementById('chQuick');
-        q.innerHTML = '';
-        (items || []).forEach(function (label) {
-          const b = document.createElement('button');
-          b.className = 'cq-btn';
-          b.textContent = label;
-          b.onclick = function () {
-            q.innerHTML = '';
-            addMsg(label, 'user');
-            const key = classify(label);
-            aiReply(t().responses[key] || t().responses.default, 1600);
-          };
-          q.appendChild(b);
-        });
+      function extractName(msg) {
+        // Try to pull out a name from patterns like "mening ismim Bobur" or just a short single word
+        const match = msg.match(/ismim\s+(\S+)/i) || msg.match(/my name is\s+(\S+)/i) || msg.match(/меня зовут\s+(\S+)/i);
+        if (match) return match[1];
+        const words = msg.trim().split(/\s+/);
+        if (words.length <= 2) return words[words.length - 1];
+        return null;
       }
 
       window.openChat = function () {
-        chatOpen = true;
         document.getElementById('chatPanel').classList.add('open');
         document.getElementById('chatBtn').classList.add('hidden');
         document.getElementById('chatInput').focus();
         if (!chatStarted) {
           chatStarted = true;
-          const lang = window.currentLang || 'en';
-          document.getElementById('chSub').textContent = t().headerSub;
-          document.getElementById('chatInput').placeholder = t().placeholder;
-          document.getElementById('chBtnLabel').textContent = t().btnLabel;
+          addDateChip();
           setTimeout(function () {
             showTyping();
             setTimeout(function () {
               removeTyping();
-              addMsg(t().greeting, 'ai');
-              setQuickReplies(t().quick);
-            }, 1200);
-          }, 300);
+              addMsg(GREETING, 'ai');
+            }, 1400);
+          }, 350);
         }
       };
 
       window.closeChat = function () {
-        chatOpen = false;
         document.getElementById('chatPanel').classList.remove('open');
         document.getElementById('chatBtn').classList.remove('hidden');
       };
@@ -1602,30 +1566,16 @@
         const msg = input.value.trim();
         if (!msg) return;
         input.value = '';
-        document.getElementById('chQuick').innerHTML = '';
         addMsg(msg, 'user');
         const key = classify(msg);
-        const delay = 1400 + Math.random() * 800;
-        aiReply(t().responses[key] || t().responses.default, delay);
+        const delay = 1200 + Math.random() * 900;
+        if (key === 'name_reply') {
+          const name = extractName(msg);
+          aiReply(responses.name(name || msg.split(' ')[0]), delay);
+        } else {
+          aiReply(responses[key] || responses.default, delay);
+        }
       };
-
-      // Update chat labels when language changes
-      const _origSetLang = window.setLang;
-      // Patch after DOMContentLoaded since setLang is defined later in the script
-      document.addEventListener('DOMContentLoaded', function () {
-        const orig = window.setLang;
-        window.setLang = function (lang) {
-          orig(lang);
-          document.getElementById('chSub').textContent = i18nChat[lang] ? i18nChat[lang].headerSub : i18nChat.en.headerSub;
-          document.getElementById('chatInput').placeholder = i18nChat[lang] ? i18nChat[lang].placeholder : i18nChat.en.placeholder;
-          document.getElementById('chBtnLabel').textContent = i18nChat[lang] ? i18nChat[lang].btnLabel : i18nChat.en.btnLabel;
-        };
-        // Set initial labels
-        const initLang = window.currentLang || 'uz';
-        document.getElementById('chSub').textContent = i18nChat[initLang] ? i18nChat[initLang].headerSub : i18nChat.en.headerSub;
-        document.getElementById('chatInput').placeholder = i18nChat[initLang] ? i18nChat[initLang].placeholder : i18nChat.en.placeholder;
-        document.getElementById('chBtnLabel').textContent = i18nChat[initLang] ? i18nChat[initLang].btnLabel : i18nChat.en.btnLabel;
-      });
     })();
 
     // ============ SCROLL REVEAL ============
