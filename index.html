@@ -506,6 +506,14 @@
     .ch-cta-link:hover{background:#229ED9;}
 
     @media(max-width:480px){#chatPanel{width:calc(100vw - 32px);}#chatWidget{right:12px;bottom:12px;}}
+
+    /* Inline hero chat */
+    #heroChat{width:100%;max-width:400px;background:#fff;border-radius:16px;box-shadow:0 20px 60px -10px rgba(0,0,0,.2),0 0 0 1px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column;}
+    #heroChat .ch-foot{border-radius:0 0 16px 16px;}
+    #hcSend:hover{background:#229ED9 !important;transform:scale(1.08);}
+    #hcSend:disabled{background:#d1d5db !important;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
+    /* Hide floating chat button since inline chat is the hero CTA */
+    #chatBtn{display:none !important;}
   </style>
 </head>
 
@@ -733,9 +741,23 @@
       <p class="text-base md:text-lg leading-relaxed max-w-2xl mx-auto mt-4 md:mt-6 mb-6 md:mb-8 text-balance text-zinc-500"
         data-i18n-html="hero_sub">Strateg AI runs your Telegram outreach, qualifies leads in real time, and syncs every
         deal straight into Bitrix24 — while you focus on closing.</p>
-      <a href="https://t.me/aziz_nizom_shaxsiy" target="_blank"
-        class="inline-flex items-center gap-2.5 bg-blue-600 text-white font-semibold px-6 md:px-8 py-3.5 md:py-4 rounded-full text-sm md:text-base btn"
-        data-i18n="hero_cta">Get free demo</a>
+      <!-- Inline hero chat -->
+      <div id="heroChat" class="mx-auto mt-6 text-left">
+        <div class="ch-header" style="border-radius:16px 16px 0 0;">
+          <div class="ch-avatar">H</div>
+          <div class="ch-info">
+            <div class="ch-name">Humoyun · Strateg AI</div>
+            <div class="ch-status"><div class="ch-dot"></div><span class="ch-sub">onlayn</span></div>
+          </div>
+        </div>
+        <div class="ch-body" id="hcBody" style="min-height:180px;max-height:220px;"></div>
+        <div class="ch-foot" style="border-radius:0 0 16px 16px;">
+          <input id="hcInput" type="text" class="flex-1" style="background:white;border:none;border-radius:22px;padding:9px 14px;font-size:13px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#111827;box-shadow:0 1px 3px rgba(0,0,0,.1);" placeholder="Xabar yozing…" maxlength="200" onkeydown="if(event.key==='Enter')sendHeroChat()" />
+          <button id="hcSend" onclick="sendHeroChat()" style="width:36px;height:36px;border-radius:50%;background:#2AABEE;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(42,171,238,.45);transition:background .18s,transform .15s;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Mobile-only widget (Telegram Chat) -->
@@ -1574,6 +1596,120 @@
         b.appendChild(wrap);
         scrollBottom();
       }
+
+      // ── Inline hero chat (same logic, different element IDs) ──
+      (function () {
+        let hcTyping = false;
+        let hcState = 'greeting';
+        let hcName = '';
+        let hcStarted = false;
+
+        function hcTime() {
+          const d = new Date();
+          return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+        }
+        function hcScroll() { const b = document.getElementById('hcBody'); if (b) b.scrollTop = b.scrollHeight; }
+
+        function hcAddMsg(text, who) {
+          const b = document.getElementById('hcBody');
+          const wrap = document.createElement('div'); wrap.className = 'cmsg ' + who;
+          const bubble = document.createElement('div'); bubble.className = 'cbubble';
+          bubble.innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+          wrap.appendChild(bubble);
+          const t = document.createElement('div'); t.className = 'cmsg-time'; t.textContent = hcTime();
+          wrap.appendChild(t); b.appendChild(wrap); hcScroll();
+        }
+
+        function hcShowTyping() {
+          const b = document.getElementById('hcBody');
+          const w = document.createElement('div'); w.className = 'ctyping-wrap'; w.id = 'hcTyping';
+          const d = document.createElement('div'); d.className = 'ctyping'; d.innerHTML = '<span></span><span></span><span></span>';
+          w.appendChild(d); b.appendChild(w); hcScroll();
+        }
+        function hcHideTyping() { const e = document.getElementById('hcTyping'); if (e) e.remove(); }
+
+        function hcReply(text, delay) {
+          hcTyping = true;
+          const btn = document.getElementById('hcSend'); if (btn) btn.disabled = true;
+          hcShowTyping();
+          setTimeout(function () {
+            hcHideTyping(); hcAddMsg(text, 'ai'); hcTyping = false;
+            const b = document.getElementById('hcSend'); if (b) b.disabled = false;
+            if (hcState === 'close') hcShowCTA();
+          }, delay || 1600);
+        }
+
+        function hcShowCTA() {
+          if (document.getElementById('hcCTA')) return;
+          const b = document.getElementById('hcBody');
+          const wrap = document.createElement('div'); wrap.id = 'hcCTA'; wrap.className = 'ch-cta-bubble';
+          wrap.innerHTML = '<p>Strateg AI ni <strong>o\'z biznesingizda</strong> ko\'rmoqchimisiz?<br>Bepul jonli demo — 30 daqiqa 🎯</p>';
+          const btn = document.createElement('a'); btn.href = TELEGRAM; btn.target = '_blank'; btn.className = 'ch-cta-link';
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg> Telegram orqali yozish';
+          wrap.appendChild(btn); b.appendChild(wrap); hcScroll();
+        }
+
+        function hcClassify(m) {
+          if (/qimmat|arzon|narx|dollar|\$|pul|budget|cost|expensive/.test(m)) return 'price_obj';
+          if (/o'ylab|keyin|vaqt yo'q|band|later|bilmay/.test(m)) return 'think_obj';
+          if (/ishonmayman|kafolat|guarantee|ishonch/.test(m)) return 'trust_obj';
+          return null;
+        }
+
+        function hcStageReply(msg) {
+          const m = msg.toLowerCase();
+          const n = hcName || 'do\'stim';
+          const obj = hcClassify(m);
+          if (obj === 'price_obj') return n + ', tushunaman 🤝\n\nAmmo yo\'qotilgan har bir lead — sizga pul. 30 kun ichida natija bo\'lmasa, pulni qaytaramiz 💯\n\nBepul demo ko\'rmoqchimisiz?';
+          if (obj === 'think_obj') return 'Nimani o\'ylash kerak — hozir ayta olasizmi? 😊\n\nAsosiy savol bo\'lsa, javob beraman. 5 daqiqa Telegramda gaplashsak, hammasi aniq bo\'ladi.';
+          if (obj === 'trust_obj') return 'To\'liq tushunaman! 💪\n\nBaraka Textile 38% ko\'proq bitim yopdi. AutoPark javob vaqtini 6 soatdan 3 daqiqaga tushirdi.\n\nBepul demo — xavf yo\'q, o\'z ko\'zingiz bilan ko\'ring.';
+
+          switch (hcState) {
+            case 'greeting':
+              hcName = msg.trim().split(/\s+/)[0];
+              hcName = hcName.charAt(0).toUpperCase() + hcName.slice(1);
+              hcState = 'discovery';
+              return hcName + ', yaxshi tanishdik! 🤝\n\nQaysi sohadagi biznesda ishlaysiz va mijozlaringiz ko\'proq qaysi kanaldan — Telegram, Instagram yoki boshqa joydan kelyapti?';
+            case 'discovery':
+              hcState = 'amplify';
+              return 'Tushundim! 👍\n\nHozir yangi so\'rov kelganda — javob berishga o\'rtacha qancha vaqt ketadi? Va bu jarayon qo\'lda bajarilyadimi?';
+            case 'amplify':
+              hcState = 'solution';
+              return '5 daqiqadan keyin javob berish — konversiyani 80% kamaytiradi ⚡\n\nRaqobatchilaringiz ham shu muammoda. Agar sizning biznesingiz 4 soniyada javob bersa — nima o\'zgaradi?';
+            case 'solution':
+              hcState = 'offer';
+              return 'Strateg AI aynan shu uchun yaratilgan ✅\n\n• Telegram/Instagram DM ga 4 soniyada javob\n• Leadlarni avtomatik kvalifikatsiya\n• Bitrix24 ga avtomatik yuborish\n• 24/7 ishlaydi\n\nNarxlarni ko\'rmoqchimisiz?';
+            case 'offer':
+              hcState = 'close';
+              return '💼 **Starter** — $29/oy\n🚀 **Pro** — $79/oy ← Ko\'pchilik shu\n🏢 **Enterprise** — $199/oy\n\n**Kafolat:** 30 kun ichida natija bo\'lmasa — to\'liq qaytaramiz.\n\nBepul demo ko\'rmoqchimisiz?';
+            default:
+              return n + ', juda yaxshi! 🙌\n\nTelegramda 30 daqiqa jonli demo — AI sizning akkauntingizda ishlashini ko\'rasiz.\n\nQachon qulay?';
+          }
+        }
+
+        window.sendHeroChat = function () {
+          if (hcTyping) return;
+          const input = document.getElementById('hcInput');
+          const msg = input.value.trim(); if (!msg) return;
+          input.value = '';
+          hcAddMsg(msg, 'user');
+          hcReply(hcStageReply(msg), 1200 + Math.random() * 800);
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+          if (hcStarted) return; hcStarted = true;
+          const b = document.getElementById('hcBody');
+          const chip = document.createElement('div'); chip.className = 'ch-date-chip'; chip.textContent = 'Bugun';
+          b.appendChild(chip);
+          setTimeout(function () {
+            hcShowTyping();
+            setTimeout(function () {
+              hcHideTyping();
+              hcAddMsg("Assalomu alaykum! 👋 Mening ismim Humoyun, Strateg AI savdo mutaxassisiman.\n\nXizmatlarimizni Strateg AI misolida ko'rsataman 🙂\n\nSizga qanday murojaat qilsam bo'ladi?", 'ai');
+            }, 1400);
+          }, 800);
+        });
+      })();
 
       // ── Public API ──
       window.openChat = function () {
